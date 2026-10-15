@@ -198,9 +198,7 @@
         "overlap"
       ],
       "exampleHash": "24683935274bbad0",
-      "ctas": [
-        "diferenciais-{item.id}"
-      ],
+      "ctas": [],
       "contract": {
         "itemsPath": "reasons",
         "itemsMin": 5,

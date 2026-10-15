@@ -4,8 +4,8 @@
  *
  * Spinplus: visual do layout aprovado pelo cliente em 15/10/2026 (docs/BRIEFING.md,
  * "Desvios") — seção clara com título de tecnologia e as marcas Ingersoll Rand e
- * Spinplus, o compressor aberto com o airend sangrando à esquerda, 4 cards de
- * tecnologia clicáveis e os 5 diferenciais em cards na base. Deixa de ser bloco navy.
+ * Spinplus, faixa larga com o compressor aberto e o airend sobre fundo técnico, e os 5
+ * diferenciais em cards na base. Sem CTA próprio: a Cotação vem logo em seguida.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: restaure esta versão
  * depois de recompor.
  */
@@ -24,127 +24,98 @@ const { tone, rhythm } = Astro.props
 ---
 
 <Section id="diferenciais" tone={tone} rhythm={rhythm} container={false} class="relative">
-  <div class="why-tech relative overflow-hidden">
-    <div class="relative pt-14 pb-12 lg:pt-16 lg:pb-14">
-      {/* Título, subtítulo e as duas marcas */}
-      <div class="mx-auto flex max-w-page flex-col gap-8 px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:px-10">
-        <div class="min-w-0">
-          <span class="relative inline-flex items-center pt-2 pl-4 font-sans text-[13px] font-bold tracking-[0.2em] text-brand-red uppercase">
-            <span
-              aria-hidden="true"
-              class="absolute top-0 left-0 size-3.5 border-t-[3px] border-l-[3px] border-brand-red"
-            ></span>
-            {why.eyebrow}
-          </span>
+  <div class="why-tech relative overflow-hidden pt-14 pb-12 lg:pt-16 lg:pb-14">
+    {/* Título, subtítulo e as duas marcas */}
+    <div class="mx-auto flex max-w-page flex-col gap-8 px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:px-10">
+      <div class="min-w-0">
+        <span class="relative inline-flex items-center pt-2 pl-4 font-sans text-[13px] font-bold tracking-[0.2em] text-brand-red uppercase">
+          <span
+            aria-hidden="true"
+            class="absolute top-0 left-0 size-3.5 border-t-[3px] border-l-[3px] border-brand-red"
+          ></span>
+          {why.eyebrow}
+        </span>
 
-          <h2 class="mt-3 font-display text-3xl leading-[1.08] font-extrabold tracking-[-0.015em] text-primary-dark-900 sm:text-4xl lg:text-[2.6rem] xl:text-[3.1rem]">
-            {why.titleLines.map((line, i) => (
-              <>
-                {i > 0 && <br class="hidden sm:block" />}
-                {i > 0 && <span class="sm:hidden"> </span>}
-                {line}
-              </>
-            ))}
-          </h2>
-
-          <div class="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-7">
-            <span aria-hidden="true" class="h-[3px] w-14 shrink-0 bg-brand-red sm:w-20"></span>
-            <p class="font-sans text-base leading-relaxed text-ink-soft sm:text-lg">{why.text}</p>
-          </div>
-        </div>
-
-        <div class="flex shrink-0 items-center gap-5 sm:gap-8 lg:mt-12">
-          <Image
-            src={header.partner.src}
-            alt={header.partner.alt}
-            width={362}
-            height={80}
-            format="webp"
-            loading="lazy"
-            decoding="async"
-            class="h-8 w-auto sm:h-10 xl:h-12"
-          />
-          <span aria-hidden="true" class="h-12 w-px bg-neutral-gray-200/60 xl:h-14"></span>
-          <Image
-            src={logo}
-            alt={site.brand}
-            width={340}
-            height={113}
-            format="webp"
-            loading="lazy"
-            decoding="async"
-            class="h-10 w-auto sm:h-12 xl:h-14"
-          />
-        </div>
-      </div>
-
-      <div class="mx-auto max-w-[1500px] px-6 lg:px-8">
-        {/* Visual do compressor + cards de tecnologia */}
-        <div class="mt-8 grid items-center gap-8 xl:mt-4 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.1fr)] xl:gap-6">
-          <div class="why-visual -mx-6 lg:-mx-8 xl:mx-0">
-            <Picture
-              src={why.visual.src}
-              alt={why.visual.alt}
-              widths={[640, 1024]}
-              sizes="(min-width: 1280px) 55vw, 100vw"
-              formats={['avif', 'webp']}
-              fallbackFormat="webp"
-              loading="lazy"
-              decoding="async"
-              class="block h-auto w-full"
-              pictureAttributes={{ class: 'block' }}
-            />
-          </div>
-
-          <ul class="grid gap-4 sm:grid-cols-2 lg:gap-5" aria-label={why.eyebrow}>
-            {why.features.map((feature) => (
-              <li>
-                <button
-                  type="button"
-                  data-cta={`diferenciais-${feature.id}`}
-                  class="btn-slave-whats why-feature group flex h-full w-full items-start gap-4 rounded-2xl border border-neutral-gray-200/40 bg-neutral-light p-5 text-left shadow-[0_14px_34px_-24px_rgba(0,24,48,0.4)] hover:-translate-y-1 hover:border-brand-red/40 xl:px-6"
-                >
-                  <span class="flex size-14 shrink-0 items-center justify-center rounded-full bg-[#fde4e1] text-brand-red">
-                    <Icon name={feature.icon} class="size-7" />
-                  </span>
-                  <span class="flex min-w-0 flex-col">
-                    <span class="font-display text-base leading-snug font-extrabold text-primary-dark-900 xl:text-[17px]">
-                      {feature.title}
-                    </span>
-                    <span aria-hidden="true" class="mt-2.5 block h-[3px] w-8 bg-brand-red" />
-                    <span class="mt-2.5 font-sans text-[14px] leading-relaxed text-ink-soft">
-                      {feature.description}
-                    </span>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Os 5 diferenciais */}
-        <ul
-          class="scroll-track -mx-6 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 lg:-mx-8 lg:px-8 xl:mx-0 xl:mt-6 xl:grid xl:grid-cols-5 xl:overflow-visible xl:px-0 xl:pb-0"
-          aria-label="Diferenciais da Spinplus"
-        >
-          {why.reasons.map((reason) => (
-            <li class="flex w-[78%] shrink-0 snap-start items-start gap-4 rounded-xl border border-neutral-gray-200/40 bg-neutral-light p-5 shadow-[0_10px_28px_-22px_rgba(0,24,48,0.4)] sm:w-[44%] lg:w-[30%] xl:w-auto xl:gap-3.5 xl:p-4 2xl:gap-4 2xl:p-5">
-              <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#e7edf6] text-primary-dark-900">
-                <Icon name={reason.icon} class="size-6" />
-              </span>
-              <span class="flex min-w-0 flex-col">
-                <span class="font-display text-[15px] leading-snug font-extrabold text-primary-dark-900 xl:text-base">
-                  {reason.title}
-                </span>
-                <span aria-hidden="true" class="mt-2 block h-[3px] w-7 bg-brand-red" />
-                <span class="mt-2 font-sans text-[13px] leading-relaxed text-ink-soft xl:text-[14px]">
-                  {reason.description}
-                </span>
-              </span>
-            </li>
+        <h2 class="mt-3 font-display text-3xl leading-[1.08] font-extrabold tracking-[-0.015em] text-primary-dark-900 sm:text-4xl lg:text-[2.6rem] xl:text-[3.1rem]">
+          {why.titleLines.map((line, i) => (
+            <>
+              {i > 0 && <br class="hidden sm:block" />}
+              {i > 0 && <span class="sm:hidden"> </span>}
+              {line}
+            </>
           ))}
-        </ul>
+        </h2>
+
+        <div class="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-7">
+          <span aria-hidden="true" class="h-[3px] w-14 shrink-0 bg-brand-red sm:w-20"></span>
+          <p class="font-sans text-base leading-relaxed text-ink-soft sm:text-lg">{why.text}</p>
+        </div>
       </div>
+
+      <div class="flex shrink-0 items-center gap-5 sm:gap-8 lg:mt-12">
+        <Image
+          src={header.partner.src}
+          alt={header.partner.alt}
+          width={362}
+          height={80}
+          format="webp"
+          loading="lazy"
+          decoding="async"
+          class="h-8 w-auto sm:h-10 xl:h-12"
+        />
+        <span aria-hidden="true" class="h-12 w-px bg-neutral-gray-200/60 xl:h-14"></span>
+        <Image
+          src={logo}
+          alt={site.brand}
+          width={340}
+          height={113}
+          format="webp"
+          loading="lazy"
+          decoding="async"
+          class="h-10 w-auto sm:h-12 xl:h-14"
+        />
+      </div>
+    </div>
+
+    {/* Faixa larga: compressor aberto e airend sobre o fundo técnico */}
+    <div class="why-band mx-auto mt-6 max-w-[1600px] lg:mt-2">
+      <Picture
+        src={why.visual.src}
+        alt={why.visual.alt}
+        widths={[768, 1280, 1600, 1983]}
+        sizes="(min-width: 1600px) 1600px, 100vw"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        loading="lazy"
+        decoding="async"
+        class="block h-56 w-full object-cover object-[22%_50%] sm:h-72 md:aspect-[1983/416] md:h-auto md:object-center"
+        pictureAttributes={{ class: 'block' }}
+      />
+    </div>
+
+    {/* Os 5 diferenciais */}
+    <div class="mx-auto max-w-[1500px] px-6 lg:px-8">
+      <ul
+        class="scroll-track -mx-6 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 lg:-mx-8 lg:px-8 xl:mx-0 xl:grid xl:grid-cols-5 xl:overflow-visible xl:px-0 xl:pb-0"
+        aria-label="Diferenciais da Spinplus"
+      >
+        {why.reasons.map((reason) => (
+          <li class="flex w-[78%] shrink-0 snap-start items-start gap-4 rounded-xl border border-neutral-gray-200/40 bg-neutral-light p-5 shadow-[0_10px_28px_-22px_rgba(0,24,48,0.4)] sm:w-[44%] lg:w-[30%] xl:w-auto xl:gap-3.5 xl:p-4 2xl:gap-4 2xl:p-5">
+            <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#e7edf6] text-primary-dark-900">
+              <Icon name={reason.icon} class="size-6" />
+            </span>
+            <span class="flex min-w-0 flex-col">
+              <span class="font-display text-[15px] leading-snug font-extrabold text-primary-dark-900 xl:text-base">
+                {reason.title}
+              </span>
+              <span aria-hidden="true" class="mt-2 block h-[3px] w-7 bg-brand-red" />
+              <span class="mt-2 font-sans text-[13px] leading-relaxed text-ink-soft xl:text-[14px]">
+                {reason.description}
+              </span>
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </Section>
@@ -157,40 +128,23 @@ const { tone, rhythm } = Astro.props
       linear-gradient(180deg, #f5f7fa 0%, #f9fbfd 22%, #eef3f9 72%, #f5f7fa 100%);
   }
 
-  /* No desktop o visual sangra até a borda esquerda da tela */
-  @media (min-width: 1280px) {
-    .why-visual {
-      --bleed: calc(max(0px, (100vw - 1500px) / 2) + 2rem);
-      margin-left: calc(-1 * var(--bleed));
+  /* A faixa recortada começa sobre o azul: o topo se dissolve no fundo da seção */
+  .why-band {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 12%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%);
+  }
+
+  /* Em telas mais largas que a faixa, as laterais também se dissolvem */
+  @media (min-width: 1600px) {
+    .why-band {
       mask-image:
-        linear-gradient(to bottom, transparent 0%, black 14%),
-        linear-gradient(to left, transparent 0%, black 8%);
+        linear-gradient(to bottom, transparent 0%, black 12%),
+        linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
       mask-composite: intersect;
       -webkit-mask-image:
-        linear-gradient(to bottom, transparent 0%, black 14%),
-        linear-gradient(to left, transparent 0%, black 8%);
+        linear-gradient(to bottom, transparent 0%, black 12%),
+        linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
       -webkit-mask-composite: source-in;
-    }
-  }
-
-  .why-feature {
-    transition:
-      transform 300ms ease-out,
-      border-color 300ms ease-out,
-      box-shadow 300ms ease-out;
-  }
-
-  .why-feature:hover {
-    box-shadow: 0 26px 50px -28px rgb(0 33 71 / 0.45);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .why-feature {
-      transition: none;
-    }
-
-    .why-feature:hover {
-      transform: none;
     }
   }
 </style>
