@@ -2,18 +2,21 @@
 /**
  * Diferenciais — fase "autoridade" da biblioteca B2.
  *
- * Bloco navy em largura total (por isso `container={false}`) com 5 cards
- * sobrepostos à sua base. É a segunda seção que carrega bloco navy: o respiro
- * escuro da segunda metade, imediatamente antes da conversão.
+ * Spinplus: visual do layout aprovado pelo cliente em 15/10/2026 (docs/BRIEFING.md,
+ * "Desvios") — seção clara com título de tecnologia e as marcas Ingersoll Rand e
+ * Spinplus, o compressor aberto com o airend sangrando à esquerda, 4 cards de
+ * tecnologia clicáveis e os 5 diferenciais em cards na base. Deixa de ser bloco navy.
+ * `npm run compose` sobrescreve este arquivo com o da biblioteca: restaure esta versão
+ * depois de recompor.
  */
-import { Picture, Image } from 'astro:assets'
+import { Image, Picture } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
-import Button from '@components/Button.astro'
-import Eyebrow from '@components/Eyebrow.astro'
 import type { SectionProps } from '@lib/layout'
-import { cta } from '@data/content'
+import { header } from '@data/content'
+import { site } from '@data/site'
 import { why } from '@data/sections/diferenciais'
+import logo from '@assets/LOGO.png'
 
 type Props = SectionProps
 
@@ -21,207 +24,173 @@ const { tone, rhythm } = Astro.props
 ---
 
 <Section id="diferenciais" tone={tone} rhythm={rhythm} container={false} class="relative">
-  {/* Bloco navy em largura total */}
-  <div class="why-hero navy-premium relative overflow-hidden">
-    <span aria-hidden="true" class="why-grid pointer-events-none absolute inset-0"></span>
+  <div class="why-tech relative overflow-hidden">
+    <div class="relative pt-14 pb-12 lg:pt-16 lg:pb-14">
+      {/* Título, subtítulo e as duas marcas */}
+      <div class="mx-auto flex max-w-page flex-col gap-8 px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:px-10">
+        <div class="min-w-0">
+          <span class="relative inline-flex items-center pt-2 pl-4 font-sans text-[13px] font-bold tracking-[0.2em] text-brand-red uppercase">
+            <span
+              aria-hidden="true"
+              class="absolute top-0 left-0 size-3.5 border-t-[3px] border-l-[3px] border-brand-red"
+            ></span>
+            {why.eyebrow}
+          </span>
 
-    {/* Foto de cenário sangrando à direita (desktop) e no topo (mobile) */}
-    <div class="absolute inset-y-0 right-0 w-full lg:w-[52%] xl:w-1/2">
-      <Picture
-        src={why.scene.src}
-        alt={why.scene.alt}
-        widths={[640, 1024, 1600]}
-        sizes="(min-width: 1024px) 52vw, 100vw"
-        formats={['avif', 'webp']}
-        fallbackFormat="webp"
-        loading="lazy"
-        decoding="async"
-        class="absolute inset-0 h-full w-full object-cover object-[40%_center]"
-        pictureAttributes={{ class: 'absolute inset-0 h-full w-full' }}
-      />
-      <span
-        aria-hidden="true"
-        class="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-dark via-primary-dark/20 to-transparent lg:bg-gradient-to-r lg:from-primary-dark lg:via-primary-dark/25 lg:to-transparent"
-      ></span>
-      <span
-        aria-hidden="true"
-        class="pointer-events-none absolute inset-x-0 bottom-0 hidden h-2/5 bg-gradient-to-t from-primary-dark-900 to-transparent lg:block"
-      ></span>
-    </div>
+          <h2 class="mt-3 font-display text-3xl leading-[1.08] font-extrabold tracking-[-0.015em] text-primary-dark-900 sm:text-4xl lg:text-[2.6rem] xl:text-[3.1rem]">
+            {why.titleLines.map((line, i) => (
+              <>
+                {i > 0 && <br class="hidden sm:block" />}
+                {i > 0 && <span class="sm:hidden"> </span>}
+                {line}
+              </>
+            ))}
+          </h2>
 
-    <div class="relative mx-auto w-full max-w-page px-6 pt-10 pb-8 lg:px-10 lg:pt-10 lg:pb-24">
-      <span
-        aria-hidden="true"
-        class="pointer-events-none absolute top-5 left-6 hidden size-[18px] border-t-2 border-l-2 border-accent-orange opacity-90 lg:top-8 lg:left-10 lg:block"
-      ></span>
-      <div class="max-w-xl lg:max-w-[46%]">
-        <Eyebrow tone="light">{why.eyebrow}</Eyebrow>
-        <h2 class="mt-3 font-display text-3xl leading-[1.1] font-extrabold text-neutral-light sm:text-4xl xl:text-[44px]">
-          {why.titleLines.map((line, i) => (
-            <>
-              {i > 0 && <br />}
-              {line}
-            </>
-          ))}
-        </h2>
-
-        <span aria-hidden="true" class="mt-5 block h-[3px] w-16 bg-accent-orange"></span>
-
-        <p class="mt-5 font-sans text-[15px] leading-relaxed text-neutral-light/75 sm:text-base">
-          {why.text}
-        </p>
-
-        <Button
-          cta="diferenciais-cta"
-          variant="primary"
-          class="mt-7 w-full shadow-[0_14px_30px_-12px_rgba(255,107,0,0.85)] sm:w-auto"
-        >
-          {cta.primary}
-        </Button>
-      </div>
-    </div>
-
-    <div class="why-people" aria-hidden="true">
-      <Image
-        src={why.person.src}
-        alt={why.person.alt}
-        format="webp"
-        width={1220}
-        loading="lazy"
-        decoding="async"
-        class="why-person"
-      />
-    </div>
-  </div>
-
-  {/* Cards sobrepostos à base do bloco navy */}
-  <div class="relative z-10 mx-auto -mt-16 max-w-page px-6 lg:px-10">
-    <ul
-      class="why-track scroll-track -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 lg:mx-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0"
-      aria-label={why.eyebrow}
-    >
-      {why.reasons.map((reason) => (
-        <li class="why-card group relative flex w-[78%] shrink-0 snap-start flex-col gap-2.5 overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light p-4 shadow-[0_24px_48px_-24px_rgba(0,24,48,0.45)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent-orange/50 hover:shadow-[0_32px_60px_-28px_rgba(0,33,71,0.5)] sm:w-[44%] lg:w-auto">
-          <span
-            aria-hidden="true"
-            class="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-accent-orange transition-transform duration-300 ease-out group-hover:scale-x-100"
-          />
-          <div class="flex items-center gap-2.5">
-            <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-neutral-gray-100 text-primary-dark-800 transition-colors duration-300 group-hover:bg-accent-orange/10 group-hover:text-accent-orange">
-              <Icon name={reason.icon} class="size-[18px]" />
-            </span>
-            <h3 class="line-clamp-2 flex min-h-[2.5em] items-center font-display text-[14px] leading-[1.25] font-extrabold text-ink">
-              {reason.title}
-            </h3>
+          <div class="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-7">
+            <span aria-hidden="true" class="h-[3px] w-14 shrink-0 bg-brand-red sm:w-20"></span>
+            <p class="font-sans text-base leading-relaxed text-ink-soft sm:text-lg">{why.text}</p>
           </div>
-          <p class="line-clamp-2 min-h-[3.25em] font-sans text-[13px] leading-relaxed text-ink-soft">
-            {reason.description}
-          </p>
-        </li>
-      ))}
-    </ul>
+        </div>
 
-    <div class="mt-3 flex items-center justify-center gap-3 lg:hidden">
-      <button
-        type="button"
-        data-why-prev
-        aria-label="Diferencial anterior"
-        class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
-      >
-        <Icon name="chevron-right" class="size-4 rotate-180" />
-      </button>
-      <button
-        type="button"
-        data-why-next
-        aria-label="Próximo diferencial"
-        class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
-      >
-        <Icon name="chevron-right" class="size-4" />
-      </button>
+        <div class="flex shrink-0 items-center gap-5 sm:gap-8 lg:mt-12">
+          <Image
+            src={header.partner.src}
+            alt={header.partner.alt}
+            width={362}
+            height={80}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+            class="h-8 w-auto sm:h-10 xl:h-12"
+          />
+          <span aria-hidden="true" class="h-12 w-px bg-neutral-gray-200/60 xl:h-14"></span>
+          <Image
+            src={logo}
+            alt={site.brand}
+            width={340}
+            height={113}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+            class="h-10 w-auto sm:h-12 xl:h-14"
+          />
+        </div>
+      </div>
+
+      <div class="mx-auto max-w-[1500px] px-6 lg:px-8">
+        {/* Visual do compressor + cards de tecnologia */}
+        <div class="mt-8 grid items-center gap-8 xl:mt-4 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.1fr)] xl:gap-6">
+          <div class="why-visual -mx-6 lg:-mx-8 xl:mx-0">
+            <Picture
+              src={why.visual.src}
+              alt={why.visual.alt}
+              widths={[640, 1024]}
+              sizes="(min-width: 1280px) 55vw, 100vw"
+              formats={['avif', 'webp']}
+              fallbackFormat="webp"
+              loading="lazy"
+              decoding="async"
+              class="block h-auto w-full"
+              pictureAttributes={{ class: 'block' }}
+            />
+          </div>
+
+          <ul class="grid gap-4 sm:grid-cols-2 lg:gap-5" aria-label={why.eyebrow}>
+            {why.features.map((feature) => (
+              <li>
+                <button
+                  type="button"
+                  data-cta={`diferenciais-${feature.id}`}
+                  class="btn-slave-whats why-feature group flex h-full w-full items-start gap-4 rounded-2xl border border-neutral-gray-200/40 bg-neutral-light p-5 text-left shadow-[0_14px_34px_-24px_rgba(0,24,48,0.4)] hover:-translate-y-1 hover:border-brand-red/40 xl:px-6"
+                >
+                  <span class="flex size-14 shrink-0 items-center justify-center rounded-full bg-[#fde4e1] text-brand-red">
+                    <Icon name={feature.icon} class="size-7" />
+                  </span>
+                  <span class="flex min-w-0 flex-col">
+                    <span class="font-display text-base leading-snug font-extrabold text-primary-dark-900 xl:text-[17px]">
+                      {feature.title}
+                    </span>
+                    <span aria-hidden="true" class="mt-2.5 block h-[3px] w-8 bg-brand-red" />
+                    <span class="mt-2.5 font-sans text-[14px] leading-relaxed text-ink-soft">
+                      {feature.description}
+                    </span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Os 5 diferenciais */}
+        <ul
+          class="scroll-track -mx-6 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 lg:-mx-8 lg:px-8 xl:mx-0 xl:mt-6 xl:grid xl:grid-cols-5 xl:overflow-visible xl:px-0 xl:pb-0"
+          aria-label="Diferenciais da Spinplus"
+        >
+          {why.reasons.map((reason) => (
+            <li class="flex w-[78%] shrink-0 snap-start items-start gap-4 rounded-xl border border-neutral-gray-200/40 bg-neutral-light p-5 shadow-[0_10px_28px_-22px_rgba(0,24,48,0.4)] sm:w-[44%] lg:w-[30%] xl:w-auto xl:gap-3.5 xl:p-4 2xl:gap-4 2xl:p-5">
+              <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#e7edf6] text-primary-dark-900">
+                <Icon name={reason.icon} class="size-6" />
+              </span>
+              <span class="flex min-w-0 flex-col">
+                <span class="font-display text-[15px] leading-snug font-extrabold text-primary-dark-900 xl:text-base">
+                  {reason.title}
+                </span>
+                <span aria-hidden="true" class="mt-2 block h-[3px] w-7 bg-brand-red" />
+                <span class="mt-2 font-sans text-[13px] leading-relaxed text-ink-soft xl:text-[14px]">
+                  {reason.description}
+                </span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </div>
 </Section>
 
 <style>
-  .why-hero {
-    isolation: isolate;
+  /* Fundo claro e azulado, que encosta no cinza das seções vizinhas em cima e embaixo */
+  .why-tech {
+    background:
+      radial-gradient(1100px 560px at 85% 25%, #ffffff 0%, rgb(255 255 255 / 0) 62%),
+      linear-gradient(180deg, #f5f7fa 0%, #f9fbfd 22%, #eef3f9 72%, #f5f7fa 100%);
   }
-  .why-people {
-    position: relative;
-    z-index: 1;
-    width: min(100%, 620px);
-    height: 500px;
-    margin: 0 auto;
-    pointer-events: none;
-  }
-  .why-person {
-    position: absolute;
-    z-index: 2;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-    object-position: bottom center;
-    filter: drop-shadow(0 12px 20px rgb(0 15 35 / 25%));
-  }
-  @media (min-width: 1024px) {
-    .why-hero {
-      display: flex;
-      align-items: center;
-      min-height: 520px;
-    }
-    .why-people {
-      position: absolute;
-      right: 2%;
-      bottom: 0;
-      width: 49%;
-      height: 100%;
-      max-height: 560px;
-    }
-  }
-  @media (max-width: 389px) {
-    .why-people {
-      height: 450px;
+
+  /* No desktop o visual sangra até a borda esquerda da tela */
+  @media (min-width: 1280px) {
+    .why-visual {
+      --bleed: calc(max(0px, (100vw - 1500px) / 2) + 2rem);
+      margin-left: calc(-1 * var(--bleed));
+      mask-image:
+        linear-gradient(to bottom, transparent 0%, black 14%),
+        linear-gradient(to left, transparent 0%, black 8%);
+      mask-composite: intersect;
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 14%),
+        linear-gradient(to left, transparent 0%, black 8%);
+      -webkit-mask-composite: source-in;
     }
   }
 
-  .why-grid {
-    background-image:
-      linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: radial-gradient(ellipse at 15% 10%, black 0%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at 15% 10%, black 0%, transparent 70%);
+  .why-feature {
+    transition:
+      transform 300ms ease-out,
+      border-color 300ms ease-out,
+      box-shadow 300ms ease-out;
+  }
+
+  .why-feature:hover {
+    box-shadow: 0 26px 50px -28px rgb(0 33 71 / 0.45);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .why-card,
-    .why-card * {
-      transition: none !important;
+    .why-feature {
+      transition: none;
     }
 
-    .why-card:hover {
+    .why-feature:hover {
       transform: none;
     }
   }
 </style>
-
-<script>
-  document.querySelectorAll<HTMLElement>('[data-why]').forEach((root) => {
-    const track = root.querySelector<HTMLElement>('.why-track')
-    const prev = root.querySelector<HTMLButtonElement>('[data-why-prev]')
-    const next = root.querySelector<HTMLButtonElement>('[data-why-next]')
-    if (!track || !prev || !next) return
-
-    const step = () => {
-      const card = track.querySelector<HTMLElement>('li')
-      return card ? card.offsetWidth + 16 : track.clientWidth * 0.8
-    }
-
-    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }))
-    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }))
-  })
-</script>

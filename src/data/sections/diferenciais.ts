@@ -1,19 +1,16 @@
 /**
  * Dados da seção "Diferenciais" (biblioteca B2, fase: autoridade).
  *
- * Bloco navy em largura total com a frase de autoridade e a pessoa recortada, e 5
- * cards sobrepostos à base do bloco. São 5 exatos: o grid é `lg:grid-cols-5`.
- *
- * Spinplus: frase de autoridade e 5 diferenciais do briefing. Imagens provisórias, do
- * site do cliente: o cenário é uma sala de compressores e, sem foto de pessoa da
- * equipe, o recorte é um compressor Ingersoll Rand. Trocar quando chegar a foto.
+ * Spinplus: layout aprovado pelo cliente em 15/10/2026 — título de tecnologia com as
+ * duas marcas, visual do compressor aberto com o airend, 4 cards de tecnologia
+ * (clicáveis, abrem o atendimento) e os 5 diferenciais do briefing na base. São 5
+ * exatos: o grid é `lg:grid-cols-5`.
  */
 import type { IconName } from '@data/icons'
 import type { Photo } from '@data/types'
-import { site } from '@data/site'
 
-import cenario from '@assets/diferenciais/cenario.jpg'
-import pessoa from '@assets/diferenciais/pessoa.png'
+// Recortado do modelo de layout enviado pelo usuário: compressor Nirvana aberto e airend em corte.
+import visual from '@assets/diferenciais/tecnologia-ingersoll.jpg'
 
 export interface Reason {
   icon: IconName
@@ -21,29 +18,56 @@ export interface Reason {
   description: string
 }
 
+export interface Feature extends Reason {
+  /** Vira o `data-cta` do card: `diferenciais-{id}`. */
+  id: string
+}
+
 export const why = {
-  eyebrow: `Por que a ${site.brandShort}`,
-  /** Cada item é uma linha do H2 (quebra forçada). 3–6 palavras no total. */
-  titleLines: ['Ar comprimido para', 'sua produtividade'],
-  text: `Mais de 20 anos dedicados a ar comprimido, com foco em geração e tratamento de ar. A ${site.brandShort} distribui compressores Ingersoll Rand no estado do Rio de Janeiro, com técnicos certificados pela fabricante.`,
-  scene: {
-    src: cenario,
-    alt: 'Sala de compressores de parafuso com tubulação de ar comprimido',
+  eyebrow: 'Tecnologia e eficiência',
+  /** Cada item é uma linha do H2 (quebra forçada no desktop). */
+  titleLines: ['Tecnologia em ar comprimido', 'para elevar sua operação'],
+  text: 'Soluções Ingersoll Rand para mais eficiência, confiabilidade e produtividade.',
+  visual: {
+    src: visual,
+    alt: 'Compressor de parafuso Ingersoll Rand aberto ao lado de um airend em corte, com os rotores à mostra',
   },
-  person: {
-    src: pessoa,
-    alt: 'Compressor de parafuso Ingersoll Rand da Série R',
-  },
-  reasons: [
+  features: [
     {
-      icon: 'clock',
-      title: 'Experiência consolidada',
-      description: 'Mais de 20 anos dedicados a ar comprimido.',
+      id: 'parafuso',
+      icon: 'compressor',
+      title: 'Compressores de parafuso',
+      description: 'Soluções robustas e confiáveis para aplicações industriais.',
     },
     {
-      icon: 'layers',
+      id: 'velocidade',
+      icon: 'trend-up',
+      title: 'Velocidade fixa ou variável',
+      description: 'Flexibilidade para atender às demandas da sua operação.',
+    },
+    {
+      id: 'vsd',
+      icon: 'gears',
+      title: 'VSD: menor consumo de energia',
+      description: 'Tecnologia que reduz o consumo e aumenta a eficiência.',
+    },
+    {
+      id: 'airend',
+      icon: 'hard-hat',
+      title: 'Airend de última geração',
+      description: '8% mais eficiência e 13% mais fluxo de ar.',
+    },
+  ],
+  reasons: [
+    {
+      icon: 'trophy',
+      title: 'Experiência consolidada',
+      description: 'Mais de 20 anos dedicados ao ar comprimido.',
+    },
+    {
+      icon: 'target',
       title: 'Atuação especializada',
-      description: 'Empresa focada em geração e tratamento de ar.',
+      description: 'Geração e tratamento de ar.',
     },
     {
       icon: 'map-pin',
@@ -56,16 +80,16 @@ export const why = {
       description: 'Equipe certificada pela Ingersoll Rand.',
     },
     {
-      icon: 'sliders',
+      icon: 'factory',
       title: 'Portfólio industrial',
-      description: 'Séries com velocidade fixa, VSD e tratamento integrado.',
+      description: 'Soluções de velocidade fixa, VSD e tratamento integrado.',
     },
   ],
 } as const satisfies {
   eyebrow: string
   titleLines: readonly string[]
   text: string
-  scene: Photo
-  person: Photo
+  visual: Photo
+  features: readonly [Feature, Feature, Feature, Feature]
   reasons: readonly [Reason, Reason, Reason, Reason, Reason]
 }

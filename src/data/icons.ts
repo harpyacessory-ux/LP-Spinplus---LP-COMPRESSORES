@@ -48,6 +48,18 @@ export const iconPaths = {
   wrench:
     '<path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.3L3.5 16.8l3.2 3.2 5.2-5.2a4.5 4.5 0 0 0 5.3-6l-2.9 2.9-2.4-.6-.6-2.4 2.9-2.9Z"/>',
   clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.5 2"/>',
+  /** Compressor de parafuso: gabinete com painel (Spinplus, diferenciais). */
+  compressor:
+    '<rect x="5" y="3" width="11" height="10" rx="1"/><path d="M8 6.5h5M8 9.5h3"/><rect x="3" y="15" width="18" height="5" rx="2.5"/><path d="M6 20v1.5M18 20v1.5"/>',
+  /** Engrenagens: acionamento VSD (Spinplus, diferenciais). */
+  gears:
+    '<circle cx="9" cy="10" r="3"/><path d="M9 4.5v1.6M9 13.9v1.6M3.5 10h1.6M12.9 10h1.6M5.1 6.1l1.1 1.1M11.8 12.8l1.1 1.1M5.1 13.9l1.1-1.1M11.8 7.2l1.1-1.1"/><circle cx="17" cy="16.5" r="2"/><path d="M17 12.8v1.2M17 19v1.2M13.3 16.5h1.2M19.5 16.5h1.2"/>',
+  /** Capacete de técnico (Spinplus, diferenciais). */
+  'hard-hat':
+    '<path d="M4 15a8 8 0 0 1 16 0"/><path d="M2.5 15h19v2.5h-19z"/><path d="M10 7.2V11M14 7.2V11"/><path d="M8 20.5h8"/>',
+  /** Troféu: experiência consolidada (Spinplus, diferenciais). */
+  trophy:
+    '<path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 13v4M9 20.5h6M10 17h4"/>',
   /** Manômetro: pressão de trabalho (Spinplus, painel de dimensionamento). */
   gauge: '<circle cx="12" cy="12" r="8.5"/><path d="m12 12 3.6-3.6"/><path d="M8 16h8"/>',
   zap: '<path d="M13 3 6 13.5h5L10 21l7.5-10.5h-5L13 3Z"/>',
