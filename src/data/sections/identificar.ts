@@ -9,6 +9,10 @@
  * inferidos (o briefing não traz a lista do comercial). Confirmar com a Spinplus.
  */
 import type { IconName } from '@data/icons'
+import type { Photo } from '@data/types'
+
+// Desenho técnico gerado das bordas da foto da sala de compressores (layout do cliente).
+import esboco from '@assets/identificar/esboco-sala.png'
 
 export interface SupportItem {
   icon: IconName
@@ -21,8 +25,10 @@ export const supportPanel = {
   title: 'Qual compressor a sua operação pede?',
   text: 'Não precisa ter todos os dados em mãos. Envie o que souber da sua operação e a equipe da Spinplus indica o compressor Ingersoll Rand adequado.',
   microcopy: 'Retorno com apoio técnico',
+  /** Fundo decorativo à direita (desktop): desenho técnico da sala de compressores. */
+  sketch: { src: esboco, alt: '' },
   items: [
-    { icon: 'target', label: 'Pressão', hint: 'de trabalho, em bar' },
+    { icon: 'gauge', label: 'Pressão', hint: 'de trabalho, em bar' },
     { icon: 'move', label: 'Vazão', hint: 'consumo de ar' },
     { icon: 'bolt', label: 'Potência', hint: 'atual, em HP ou kW' },
     { icon: 'clock', label: 'Regime', hint: 'horas por dia' },
@@ -34,5 +40,6 @@ export const supportPanel = {
   title: string
   text: string
   microcopy: string
+  sketch: Photo
   items: readonly [SupportItem, SupportItem, SupportItem, SupportItem, SupportItem, SupportItem]
 }

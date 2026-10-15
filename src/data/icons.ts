@@ -48,6 +48,8 @@ export const iconPaths = {
   wrench:
     '<path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.3L3.5 16.8l3.2 3.2 5.2-5.2a4.5 4.5 0 0 0 5.3-6l-2.9 2.9-2.4-.6-.6-2.4 2.9-2.9Z"/>',
   clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.5 2"/>',
+  /** Manômetro: pressão de trabalho (Spinplus, painel de dimensionamento). */
+  gauge: '<circle cx="12" cy="12" r="8.5"/><path d="m12 12 3.6-3.6"/><path d="M8 16h8"/>',
   zap: '<path d="M13 3 6 13.5h5L10 21l7.5-10.5h-5L13 3Z"/>',
   'map-pin':
     '<path d="M12 21.5s7-6.6 7-11.8a7 7 0 1 0-14 0c0 5.2 7 11.8 7 11.8Z"/><circle cx="12" cy="9.7" r="2.4"/>',
