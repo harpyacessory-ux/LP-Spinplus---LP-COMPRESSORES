@@ -2,6 +2,8 @@
 import { getImage } from 'astro:assets'
 import logoImg from '../assets/LOGO.png'
 import '../styles/global.css'
+// Mesmo arquivo do @font-face de global.css: o Vite dá a ele uma única URL com hash.
+import manropeUrl from '../styles/fonts/manrope-latin.woff2?url'
 import {
   site,
   title as defaultTitle,
@@ -71,12 +73,7 @@ const jsonLd = {
       imagesizes="(min-width: 1320px) 600px, (min-width: 1024px) 46vw, 100vw"
       fetchpriority="high"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href={manropeUrl} as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   </head>

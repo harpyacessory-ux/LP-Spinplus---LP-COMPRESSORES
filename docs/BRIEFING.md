@@ -158,6 +158,7 @@ Aprovados pelo usuário em 15/10/2026, a partir do modelo de layout que enviou p
 | Copy        | CTA e textos do material antigo do cliente ("Fale com nossa equipe…", "a melhor tecnologia…")                                                                                                     | o briefing recomendava não reaproveitá-los; prevalece o pedido do cliente                          |
 | Cores       | vermelho da marca (`brand-red` #e52620) e verde do botão (`cta-green`) no header e no hero                                                                                                        | o restante da página segue com o laranja do padrão                                                 |
 | Verificação | `scripts/check-lp.mjs` (A8 e especificação de LOGO/heroBg) passa a conferir as assinaturas desta versão                                                                                           | o CI continua bloqueando alteração acidental de Header e Hero                                      |
+| Fonte       | Manrope servida pela própria página (`src/styles/fonts/`, pré-carregada no Layout) em vez do Google Fonts                                                                                         | sem troca de fonte após a primeira pintura: CLS 0 (antes 0,18 no Lighthouse do CI)                 |
 
 ## Pendências para o cliente
 
