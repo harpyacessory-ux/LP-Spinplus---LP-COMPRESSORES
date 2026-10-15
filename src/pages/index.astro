@@ -17,7 +17,6 @@ import QuoteForm from '../components/QuoteForm.astro'
 import Footer from '../components/Footer.astro'
 import ProductShowcase from '../components/sections/ProductShowcase.astro'
 import SupportPanel from '../components/sections/SupportPanel.astro'
-import SegmentsShowcase from '../components/sections/SegmentsShowcase.astro'
 import WhyBrand from '../components/sections/WhyBrand.astro'
 import { shortcodes } from '../data/site'
 ---
@@ -31,7 +30,6 @@ import { shortcodes } from '../data/site'
     </Hero>
     <ProductShowcase tone="light" rhythm="open" />
     <SupportPanel tone="light" rhythm="panel-lead" />
-    <SegmentsShowcase tone="gray" rhythm="flow" />
     <WhyBrand tone="gray" rhythm="overlap" />
     <QuoteForm>
       <Fragment slot="shortcode">{shortcodes.form}</Fragment>

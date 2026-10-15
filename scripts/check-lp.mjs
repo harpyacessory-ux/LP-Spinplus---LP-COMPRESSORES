@@ -649,13 +649,21 @@ if (manifest) {
   for (const phase of MID_PHASES) {
     const def = phaseById(phase)
     const inPhase = list.filter((s) => s.phase === phase)
-    if (inPhase.length < def.min)
+    // Spinplus: fase dispensada no manifesto (`phaseWaivers`) com o motivo registrado vira aviso.
+    const waiver = manifest.phaseWaivers?.[phase]
+    if (inPhase.length < def.min && waiver)
+      warn(MANIFEST, `fase "${phase}" sem seção, dispensada: ${waiver}`)
+    else if (inPhase.length < def.min)
       fail(MANIFEST, `fase "${phase}" com ${inPhase.length} seção(ões); mínimo ${def.min}`)
     if (inPhase.length > def.max)
       fail(MANIFEST, `fase "${phase}" com ${inPhase.length} seções; máximo ${def.max}`)
     if (def.needsNavyCarrier) {
       const carriers = inPhase.filter((s) => s.carriesNavy).length
-      if (carriers !== 1)
+      // Spinplus: bloco navy dispensado no manifesto (`navyWaivers`) com o motivo vira aviso.
+      const navyWaiver = manifest.navyWaivers?.[phase]
+      if (carriers !== 1 && navyWaiver)
+        warn(MANIFEST, `fase "${phase}" sem bloco navy, dispensado: ${navyWaiver}`)
+      else if (carriers !== 1)
         fail(MANIFEST, `fase "${phase}" precisa de exatamente 1 bloco navy; tem ${carriers}`)
     }
   }
@@ -686,7 +694,10 @@ if (manifest) {
       ['segunda metade (cinza)', list.slice(cut)],
     ]) {
       const carriers = run.filter((s) => s.carriesNavy).length
-      if (carriers !== 1)
+      // Spinplus: com blocos navy dispensados no manifesto (`navyWaivers`), a regra vira aviso.
+      if (carriers !== 1 && manifest.navyWaivers)
+        warn(MANIFEST, `a ${label} está sem bloco navy (dispensado no manifesto)`)
+      else if (carriers !== 1)
         fail(
           MANIFEST,
           `a ${label} precisa de exatamente 1 seção com bloco navy e tem ${carriers} — ` +

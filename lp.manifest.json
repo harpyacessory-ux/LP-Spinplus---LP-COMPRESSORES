@@ -10,9 +10,7 @@
     "apoio": [
       "identificar"
     ],
-    "prova": [
-      "segmentos"
-    ],
+    "prova": [],
     "autoridade": [
       "diferenciais"
     ]
@@ -95,7 +93,7 @@
       "component": "SupportPanel.astro",
       "data": "identificar.ts",
       "dataExport": "supportPanel",
-      "carriesNavy": true,
+      "carriesNavy": false,
       "tone": "light",
       "rhythm": "panel-lead",
       "tones": [
@@ -126,60 +124,6 @@
       "assets": []
     },
     {
-      "slug": "segmentos",
-      "id": "segmentos",
-      "title": "Segmentos atendidos",
-      "phase": "prova",
-      "component": "SegmentsShowcase.astro",
-      "data": "segmentos.ts",
-      "dataExport": "segments",
-      "carriesNavy": false,
-      "tone": "gray",
-      "rhythm": "flow",
-      "tones": [
-        "light",
-        "gray"
-      ],
-      "rhythms": [
-        "even",
-        "tight",
-        "flow"
-      ],
-      "exampleHash": "9281198d60ed8cda",
-      "ctas": [
-        "segmentos-{item.id}"
-      ],
-      "contract": {
-        "itemsPath": "items",
-        "itemsMin": 8,
-        "itemsMax": 8,
-        "requiredItemFields": [
-          "id",
-          "icon",
-          "label",
-          "description",
-          "bullets"
-        ],
-        "itemArrays": {
-          "bullets": 3
-        },
-        "lastItemId": "outras",
-        "maxLength": {
-          "text": 170
-        }
-      },
-      "assets": [
-        {
-          "dir": "segmentos",
-          "files": "8 fotos (opcionais)",
-          "spec": "JPG/PNG 1200×900 (4:3), planta do setor em operação",
-          "width": 1200,
-          "height": 900,
-          "alpha": false
-        }
-      ]
-    },
-    {
       "slug": "diferenciais",
       "id": "diferenciais",
       "title": "Diferenciais",
@@ -187,7 +131,7 @@
       "component": "WhyBrand.astro",
       "data": "diferenciais.ts",
       "dataExport": "why",
-      "carriesNavy": true,
+      "carriesNavy": false,
       "tone": "gray",
       "rhythm": "overlap",
       "tones": [
@@ -234,5 +178,12 @@
         }
       ]
     }
-  ]
+  ],
+  "phaseWaivers": {
+    "prova": "Segmentos removida a pedido do cliente em 15/10/2026; sem seção de prova (docs/BRIEFING.md, Desvios)"
+  },
+  "navyWaivers": {
+    "apoio": "Dimensionamento redesenhado em seção clara no layout do cliente (15/10/2026)",
+    "autoridade": "Diferenciais redesenhada em seção clara no layout do cliente (15/10/2026)"
+  }
 }
