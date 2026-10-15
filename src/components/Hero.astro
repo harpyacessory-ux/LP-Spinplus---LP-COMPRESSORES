@@ -3,15 +3,14 @@
  * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.2), na versão Spinplus.
  *
  * Desvio do padrão aprovado pelo cliente em 15/10/2026 (docs/BRIEFING.md, "Desvios"):
- * hero claro em duas colunas — título, texto, destaque e botão à esquerda; foto da sala
- * de compressores emoldurada à direita — fechado por uma faixa vermelha. Sem coluna de
- * chat: o atendimento abre pelo botão (`btn-slave-whats`) e o formulário segue na Cotação.
+ * hero claro em duas colunas — título, texto e destaque à esquerda, com o espaço vazio do
+ * botão de WhatsApp que o plugin preenche (`data-whatsapp-slot`); foto da sala de
+ * compressores emoldurada à direita — fechado por uma faixa vermelha. Sem coluna de chat.
  * Fundo: foto do galpão claro enviada pelo cliente, sob um véu branco que garante a
  * leitura do texto. As duas imagens disputam o LCP: ambas eager + fetchpriority high,
  * com preload espelhado no Layout.
  */
 import { Picture } from 'astro:assets'
-import CtaButton from './CtaButton.astro'
 import RichText from './RichText.astro'
 import { hero } from '../data/content'
 
@@ -41,7 +40,7 @@ const lead = hero.title.replace(hero.highlight, '').trim()
 
     <div class="relative mx-auto max-w-page px-6 pt-12 pb-14 lg:px-10 lg:pt-16 lg:pb-20">
       <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
-        {/* Coluna 1 — texto e botão */}
+        {/* Coluna 1 — texto e espaço do botão */}
         <div class="max-w-xl lg:max-w-none">
           <h1 class="font-display text-[2.35rem] leading-[1.1] text-ink sm:text-[2.9rem] lg:text-[2.6rem] xl:text-[3.15rem]">
             <span class="block font-medium tracking-[-0.015em]">{lead}</span>
@@ -58,9 +57,12 @@ const lead = hero.title.replace(hero.highlight, '').trim()
             <RichText parts={hero.callout} />
           </p>
 
-          <CtaButton cta="hero-primary" class="mt-8">
-            {hero.cta}
-          </CtaButton>
+          {/* Espaço reservado para o botão de WhatsApp do plugin (entra no WordPress) */}
+          <div
+            data-cta="hero-whatsapp"
+            data-whatsapp-slot
+            class="mt-8 flex min-h-[60px] items-center"
+          ></div>
         </div>
 
         {/* Coluna 2 — foto emoldurada */}

@@ -69,7 +69,6 @@ export const hero = {
     'Ajudamos as indústrias oferecendo ar comprimido de excelência, eficiência, confiabilidade, ',
     { accent: 'redução de custos de manutenção e de energia!' },
   ],
-  cta: 'Fale com nossa equipe e solicite um orçamento',
   /** Faixa vermelha que fecha o hero. */
   band: ['Temos o ', { strong: 'COMPRESSOR IDEAL' }, ' para a sua aplicação!'],
   banner: {
@@ -83,7 +82,6 @@ export const hero = {
   highlight: string
   text: RichText
   callout: RichText
-  cta: string
   band: RichText
   banner: Photo
   background: Photo
@@ -105,26 +103,24 @@ export const quote = {
     { strong: site.brandShort },
     '.',
   ],
-  cta: 'Fale com nossa equipe e solicite um orçamento',
   background: {
     src: heroBg,
     alt: '',
   },
   /** Nota de LGPD exibida abaixo do formulário. */
   lgpd: `Seus dados são usados apenas para responder à sua solicitação de cotação, conforme a LGPD.`,
-  /** Aviso da prévia do formulário, visível só onde o plugin não processa o shortcode (Vercel). */
-  previewNote: 'Prévia do formulário: ele é carregado pelo plugin de atendimento no WordPress.',
 } as const satisfies {
   title: RichText
   text: RichText
-  cta: string
   background: Photo
   lgpd: string
-  previewNote: string
 }
 
 /* ------------------------------------------------------------------ footer */
 
 export const footer = {
+  /** Frase sob as marcas, no rodapé. */
+  tagline:
+    'Compressores de parafuso Ingersoll Rand para indústrias no estado do Rio de Janeiro, com mais de 20 anos de experiência em ar comprimido.',
   credit: { label: 'B2 Marketing Industrial', url: 'https://b2marketingindustrial.com.br' },
 } as const

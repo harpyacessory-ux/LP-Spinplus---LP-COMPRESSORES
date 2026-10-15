@@ -176,29 +176,26 @@ for (const f of astroFiles) {
 /* A8. Estrutura fixa: assinaturas do Header, Hero, Cotação e Footer ---------- */
 {
   const expect = {
-    // Spinplus: Header, Hero e Cotação seguem o layout aprovado pelo cliente em 15/10/2026
-    // (docs/BRIEFING.md, "Desvios do padrão"). As assinaturas abaixo são as dessa versão.
+    // Spinplus: Header, Hero, Cotação e Footer seguem o layout aprovado pelo cliente em
+    // 15/10/2026 (docs/BRIEFING.md, "Desvios do padrão"). As assinaturas são as dessa versão;
+    // o botão de WhatsApp do hero e da cotação é um espaço vazio que o plugin preenche.
     'Header.astro': ['sticky top-0 z-50', 'data-header="spinplus"', 'border-brand-red'],
     'Hero.astro': [
       'data-hero',
-      'CtaButton cta="hero-primary"',
+      'data-cta="hero-whatsapp"',
+      'data-whatsapp-slot',
       'fetchpriority="high"',
       'hero-spin__band',
     ],
-    'CtaButton.astro': ['type="button"', 'btn-slave-whats', 'data-cta={cta}'],
     'QuoteForm.astro': [
       'id="cotacao"',
       'data-quote="spinplus"',
       '<slot name="shortcode"',
-      'CtaButton cta="cotacao-primary"',
+      'data-cta="cotacao-whatsapp"',
+      'data-whatsapp-slot',
       'quote.lgpd',
     ],
-    'Footer.astro': [
-      'navy-premium border-t border-white/15',
-      'getFullYear()',
-      '<address',
-      'noopener noreferrer',
-    ],
+    'Footer.astro': ['data-footer="spinplus"', 'getFullYear()', '<address', 'noopener noreferrer'],
   }
   for (const [name, needles] of Object.entries(expect)) {
     const f = join(SRC, 'components', name)

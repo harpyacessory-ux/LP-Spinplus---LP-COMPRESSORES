@@ -1,36 +1,133 @@
 ---
 /**
- * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.5). Uma linha: copyright · endereço · crédito da B2.
- * Sem menu, redes, telefone, e-mail, logo ou formulário.
+ * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.5), na versão Spinplus.
+ *
+ * Desvio do padrão aprovado pelo cliente em 15/10/2026 (docs/BRIEFING.md, "Desvios"):
+ * rodapé em dois níveis — marcas, frase de posicionamento e endereço em cima;
+ * copyright e crédito da B2 embaixo. Continua sem menu, redes, telefone, e-mail ou
+ * formulário: contato é papel do plugin de atendimento.
  */
+import { Image } from 'astro:assets'
 import Icon from './Icon.astro'
 import { site } from '../data/site'
-import { footer } from '../data/content'
+import { footer, header } from '../data/content'
+import logo from '../assets/LOGO.png'
 
 const year = new Date().getFullYear()
 ---
 
-<footer class="navy-premium border-t border-white/15">
-  <div class="mx-auto flex max-w-page flex-col items-center gap-3 px-6 py-6 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:px-10 lg:text-left">
-    <p class="shrink-0 font-sans text-xs text-neutral-light/55">
-      © {year} {site.brand}. Todos os direitos reservados.
-    </p>
+<footer class="spin-footer relative overflow-hidden text-neutral-light" data-footer="spinplus">
+  <span aria-hidden="true" class="spin-footer__grid pointer-events-none absolute inset-0"></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-40 -right-24 size-[30rem] rounded-full bg-brand-red/10 blur-3xl"
+  ></span>
 
-    <address class="flex items-center gap-2 font-sans text-xs text-neutral-light/70 not-italic lg:whitespace-nowrap">
-      <Icon name="map-pin" class="size-3.5 shrink-0 text-accent-orange" />
-      <span>{site.address}</span>
-    </address>
+  <div class="relative mx-auto max-w-page px-6 lg:px-10">
+    <div class="grid gap-10 py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-16 lg:py-14">
+      {/* Marcas e posicionamento */}
+      <div>
+        <div class="inline-flex items-center gap-5 rounded-2xl bg-neutral-light px-5 py-3.5 shadow-[0_18px_40px_-20px_rgba(0,0,0,0.6)] sm:gap-6 sm:px-6">
+          <Image
+            src={logo}
+            alt={site.brand}
+            width={340}
+            height={113}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+            class="h-9 w-auto sm:h-11"
+          />
+          <span aria-hidden="true" class="h-9 w-px bg-neutral-gray-200/60"></span>
+          <Image
+            src={header.partner.src}
+            alt={header.partner.alt}
+            width={362}
+            height={80}
+            format="webp"
+            loading="lazy"
+            decoding="async"
+            class="h-6 w-auto sm:h-7"
+          />
+        </div>
+        <p class="mt-5 max-w-md font-sans text-[15px] leading-relaxed text-neutral-light/70">
+          {footer.tagline}
+        </p>
+      </div>
 
-    <p class="shrink-0 font-sans text-xs text-neutral-light/55">
-      Desenvolvido por{' '}
-      <a
-        href={footer.credit.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="font-semibold text-neutral-light/80 transition-colors hover:text-accent-orange"
-      >
-        {footer.credit.label}
-      </a>
-    </p>
+      {/* Endereço e privacidade */}
+      <div class="flex flex-col gap-4 lg:items-end">
+        <div class="flex w-full items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm lg:max-w-md">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-red/15 text-brand-red">
+            <Icon name="map-pin" class="size-5" />
+          </span>
+          <span class="flex min-w-0 flex-col gap-1">
+            <span class="font-sans text-[11px] font-semibold tracking-[0.18em] text-neutral-light/50 uppercase">
+              Endereço
+            </span>
+            <address class="font-sans text-[15px] leading-relaxed text-neutral-light/85 not-italic">
+              {site.address}
+            </address>
+          </span>
+        </div>
+        {site.privacyUrl && (
+          <a
+            href={site.privacyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="spin-footer__link inline-flex items-center gap-2 font-sans text-[13px] text-neutral-light/65 hover:text-neutral-light"
+          >
+            <Icon name="shield" class="size-4 text-brand-red" />
+            Política de privacidade
+          </a>
+        )}
+      </div>
+    </div>
+
+    {/* Copyright e crédito */}
+    <div class="flex flex-col items-center gap-2 border-t border-white/10 py-5 text-center font-sans text-xs text-neutral-light/50 sm:flex-row sm:justify-between sm:text-left">
+      <p>
+        © {year} {site.brand}. Todos os direitos reservados.
+      </p>
+      <p>
+        Desenvolvido por{' '}
+        <a
+          href={footer.credit.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="spin-footer__link font-semibold text-neutral-light/80 hover:text-neutral-light"
+        >
+          {footer.credit.label}
+        </a>
+      </p>
+    </div>
   </div>
 </footer>
+
+<style>
+  .spin-footer {
+    background:
+      radial-gradient(900px 420px at 10% 0%, rgb(255 255 255 / 0.07) 0%, transparent 60%),
+      linear-gradient(165deg, #003669 0%, #002147 45%, #001426 100%);
+  }
+
+  /* Malha técnica, mais visível à esquerda */
+  .spin-footer__grid {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 70% 90% at 15% 30%, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 90% at 15% 30%, black 0%, transparent 75%);
+  }
+
+  .spin-footer__link {
+    transition: color 200ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spin-footer__link {
+      transition: none;
+    }
+  }
+</style>
