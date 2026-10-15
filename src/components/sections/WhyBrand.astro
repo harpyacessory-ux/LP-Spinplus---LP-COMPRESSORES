@@ -23,8 +23,14 @@ type Props = SectionProps
 const { tone, rhythm } = Astro.props
 ---
 
-<Section id="diferenciais" tone={tone} rhythm={rhythm} container={false} class="relative">
-  <div class="why-tech relative overflow-hidden pt-14 pb-12 lg:pt-16 lg:pb-14">
+<Section
+  id="diferenciais"
+  tone={tone}
+  rhythm={rhythm}
+  container={false}
+  class="relative overflow-hidden"
+>
+  <div class="relative pt-14 pb-12 lg:pt-16 lg:pb-14">
     {/* Título, subtítulo e as duas marcas */}
     <div class="mx-auto flex max-w-page flex-col gap-8 px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:px-10">
       <div class="min-w-0">
@@ -121,13 +127,6 @@ const { tone, rhythm } = Astro.props
 </Section>
 
 <style>
-  /* Fundo claro e azulado, que encosta no cinza das seções vizinhas em cima e embaixo */
-  .why-tech {
-    background:
-      radial-gradient(1000px 380px at 85% 50%, #ffffff 0%, rgb(255 255 255 / 0) 62%),
-      linear-gradient(180deg, #f5f7fa 0%, #f9fbfd 22%, #eef3f9 72%, #f5f7fa 100%);
-  }
-
   /* A faixa recortada começa sobre o azul: o topo se dissolve no fundo da seção */
   .why-band {
     mask-image: linear-gradient(to bottom, transparent 0%, black 12%);

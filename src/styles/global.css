@@ -145,3 +145,71 @@
     display: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Spinplus: divisões entre as seções com cantos arredondados (pedido do cliente,
+   15/10/2026). Cada seção termina com os cantos de baixo curvos e a seguinte sobe por
+   baixo dela: a margem negativa a esconde sob a curva e a borda transparente do mesmo
+   tamanho devolve o espaço, então conteúdo e decorações não mudam de lugar. `:not(:first-of-type)`
+   e não `section + section`: o Astro renderiza o <script> de uma seção entre ela e a seguinte.
+   Fora de @layer de propósito: precisa vencer as utilities de fundo e de borda.
+   --------------------------------------------------------------------------- */
+:root {
+  --lp-round: 2rem;
+}
+
+@media (width >= 64rem) {
+  :root {
+    --lp-round: 3rem;
+  }
+}
+
+#main > section {
+  position: relative;
+  border-bottom-left-radius: var(--lp-round);
+  border-bottom-right-radius: var(--lp-round);
+}
+
+#main > section:not(:first-of-type),
+#main + footer {
+  position: relative;
+  margin-top: calc(-1 * var(--lp-round));
+  border-top: var(--lp-round) solid transparent;
+}
+
+/* Cada seção por cima da seguinte, para a curva aparecer sobre ela */
+#main > section:nth-of-type(1) {
+  z-index: 5;
+}
+
+#main > section:nth-of-type(2) {
+  z-index: 4;
+}
+
+#main > section:nth-of-type(3) {
+  z-index: 3;
+}
+
+#main > section:nth-of-type(4) {
+  z-index: 2;
+}
+
+#main > section:nth-of-type(5) {
+  z-index: 1;
+}
+
+#main + footer {
+  z-index: 0;
+}
+
+/* Fundos que dão contraste às curvas: vitrine branca → dimensionamento cinza-claro →
+   diferenciais do branco ao azul-claro → cotação escura → rodapé navy */
+#identificar {
+  background-color: #f4f6f9;
+}
+
+#diferenciais {
+  background:
+    radial-gradient(1000px 380px at 85% 50%, #ffffff 0%, rgb(255 255 255 / 0) 62%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 25%, #f1f5f9 70%, #eef2f7 100%);
+}
