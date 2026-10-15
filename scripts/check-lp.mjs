@@ -176,14 +176,15 @@ for (const f of astroFiles) {
 /* A8. Estrutura fixa: assinaturas do Header, Hero, Cotação e Footer ---------- */
 {
   const expect = {
-    'Header.astro': ['sticky top-0 z-50', '-mt-3 -mb-10', 'rounded-b-xl', 'data-cta="header-cta"'],
+    // Spinplus: Header e Hero seguem o layout aprovado pelo cliente em 15/10/2026
+    // (docs/BRIEFING.md, "Desvios do padrão"). As assinaturas abaixo são as dessa versão.
+    'Header.astro': ['sticky top-0 z-50', 'data-header="spinplus"', 'border-brand-red'],
     'Hero.astro': [
-      'grid-template-columns: minmax(0, 1fr) 270px 300px',
-      'right: var(--page-edge)',
-      'width: 1700px',
-      'lg:w-[300px]',
-      'data-hero-grid',
+      'data-hero',
+      'data-cta="hero-primary"',
+      'btn-slave-whats',
       'fetchpriority="high"',
+      'hero-spin__band',
     ],
     'QuoteForm.astro': [
       'id="cotacao"',
@@ -476,8 +477,9 @@ async function checkAssetSpecs(manifest) {
 
 /** Especificação das imagens da estrutura fixa, que não pertencem a nenhuma seção. */
 const FIXED_ASSET_SPECS = [
-  { dir: '.', match: 'LOGO', width: 240, height: 200, alpha: true },
-  { dir: '.', match: 'heroBg', width: 1981, height: 900, alpha: false },
+  // Spinplus: logo horizontal no header claro e foto emoldurada no hero (ver "Desvios do padrão").
+  { dir: '.', match: 'LOGO', width: 493, height: 164, alpha: true },
+  { dir: '.', match: 'heroBg', width: 1920, height: 900, alpha: false },
   { dir: 'brands', width: 400, height: 160, alpha: null },
 ]
 

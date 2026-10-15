@@ -16,6 +16,12 @@
   --color-ink: #1b2733;
   --color-ink-soft: #44546a;
 
+  /* Spinplus: vermelho da logo e verde do botão de contato (header, hero e faixa do hero). */
+  --color-brand-red: #e52620;
+  --color-brand-red-dark: #c21a15;
+  --color-cta-green: #22c03a;
+  --color-cta-green-dark: #13a02a;
+
   --container-page: 1320px;
 
   /* Uma única família para títulos e corpo; o peso e o tracking fazem a hierarquia. */

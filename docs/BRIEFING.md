@@ -82,23 +82,23 @@ Aprovada pelo usuário em 15/10/2026 com a opção "inferir e publicar": Apoio e
 
 ## Entradas do núcleo
 
-| #   | Entrada                 | Status    | Valor                                                                                                       | Referência no briefing / observação                                |
-| --- | ----------------------- | --------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| 1   | MARCA                   | extraído  | Spinplus                                                                                                    | site institucional                                                 |
-| 2   | MARCA_CURTA             | extraído  | Spinplus                                                                                                    | "com a Spinplus"                                                   |
-| 3   | PRODUTO_PRINCIPAL       | inferido  | Compressores de parafuso                                                                                    | termo da campanha; cliente diz "de parafuso rotativo lubrificados" |
-| 4   | CONTEXTO_DE_USO         | inferido  | indústrias no RJ                                                                                            | "Ajudamos as indústrias"; área atendida = estado do RJ             |
-| 5   | PUBLICO                 | pendência | —                                                                                                           | cargos compradores não informados                                  |
-| 6   | HERO                    | inferido  | Mais de 20 anos / em ar comprimido · Ingersoll Rand / no estado do RJ · Técnicos / certificados             | "MAIS DE 20 ANOS DE TRADIÇÃO"; página Quem Somos                   |
-| 7   | MARCAS_ATENDIDAS        | default   | Ingersoll Rand só por extenso, sem logo; carrossel removido                                                 | uso do logo de terceiro sem decisão do cliente                     |
-| 8   | SELOS_DE_CONFIANCA      | inferido  | Mais de 20 anos de mercado · Distribuidor Ingersoll Rand no RJ · Técnicos certificados                      | site Quem Somos                                                    |
-| 9   | ENDERECO                | extraído  | Estrada do Outeiro Santo, 631, Boxes 15/16 - Taquara, Rio de Janeiro - RJ                                   | rodapé da página Quem Somos; CEP não informado                     |
-| 10  | URL_FINAL + PRIVACIDADE | pendência | https://lp-spinplus-compressores.vercel.app · privacidade: https://spinplus.com.br/politica-de-privacidade/ | URL final da LP não informada; usada a do Vercel até haver domínio |
-| 11  | SHORTCODES              | default   | `[atendimento_chat id="default"]` · `[atendimento_form id="default-form"]`                                  | shortcodes não fornecidos                                          |
-| 12  | WHATSAPP                | default   | sem botão flutuante                                                                                         | (21) 2445-0001 não confirmado como WhatsApp                        |
-| 13  | STACK + PUBLICACAO      | default   | Astro + Tailwind 4 · main → wp-build (workflow) · Vercel conectado ao GitHub                                | —                                                                  |
-| 14  | TOKENS_DE_COR + FONTE   | default   | padrão B2 (navy, laranja, Manrope)                                                                          | sem manual de marca                                                |
-| 15  | CAMPANHA                | extraído  | compressor parafuso                                                                                         | seção "Campanha e palavras-chave"                                  |
+| #   | Entrada                 | Status     | Valor                                                                                                                                                    | Referência no briefing / observação                                      |
+| --- | ----------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| 1   | MARCA                   | extraído   | Spinplus                                                                                                                                                 | site institucional                                                       |
+| 2   | MARCA_CURTA             | extraído   | Spinplus                                                                                                                                                 | "com a Spinplus"                                                         |
+| 3   | PRODUTO_PRINCIPAL       | inferido   | Compressores de parafuso                                                                                                                                 | termo da campanha; cliente diz "de parafuso rotativo lubrificados"       |
+| 4   | CONTEXTO_DE_USO         | inferido   | indústrias no RJ                                                                                                                                         | "Ajudamos as indústrias"; área atendida = estado do RJ                   |
+| 5   | PUBLICO                 | pendência  | —                                                                                                                                                        | cargos compradores não informados                                        |
+| 6   | HERO                    | confirmado | layout do cliente: "Compressores de / Ar de Parafuso Rotativo", texto, destaque e botão "Fale com nossa equipe e solicite um orçamento"; sem os 3 pontos | modelo enviado pelo usuário em 15/10/2026                                |
+| 7   | MARCAS_ATENDIDAS        | confirmado | Ingersoll Rand por extenso e logo no header (decisão do cliente no modelo de 15/10/2026); carrossel removido                                             | logo do Wikimedia Commons (vetor), sem o texto "Distribuidor Autorizado" |
+| 8   | SELOS_DE_CONFIANCA      | inferido   | Mais de 20 anos de mercado · Distribuidor Ingersoll Rand no RJ · Técnicos certificados                                                                   | site Quem Somos                                                          |
+| 9   | ENDERECO                | extraído   | Estrada do Outeiro Santo, 631, Boxes 15/16 - Taquara, Rio de Janeiro - RJ                                                                                | rodapé da página Quem Somos; CEP não informado                           |
+| 10  | URL_FINAL + PRIVACIDADE | pendência  | https://lp-spinplus-compressores.vercel.app · privacidade: https://spinplus.com.br/politica-de-privacidade/                                              | URL final da LP não informada; usada a do Vercel até haver domínio       |
+| 11  | SHORTCODES              | default    | `[atendimento_chat id="default"]` · `[atendimento_form id="default-form"]`                                                                               | shortcodes não fornecidos                                                |
+| 12  | WHATSAPP                | default    | sem botão flutuante                                                                                                                                      | (21) 2445-0001 não confirmado como WhatsApp                              |
+| 13  | STACK + PUBLICACAO      | default    | Astro + Tailwind 4 · main → wp-build (workflow) · Vercel conectado ao GitHub                                                                             | —                                                                        |
+| 14  | TOKENS_DE_COR + FONTE   | default    | padrão B2 (navy, laranja, Manrope)                                                                                                                       | sem manual de marca                                                      |
+| 15  | CAMPANHA                | extraído   | compressor parafuso                                                                                                                                      | seção "Campanha e palavras-chave"                                        |
 
 ## Entradas por seção
 
@@ -137,8 +137,8 @@ Aprovada pelo usuário em 15/10/2026 com a opção "inferir e publicar": Apoio e
 
 | Asset           | Arquivo                 | Status     | Observação                                                                                          |
 | --------------- | ----------------------- | ---------- | --------------------------------------------------------------------------------------------------- |
-| Logo            | `src/assets/LOGO.png`   | provisório | logo horizontal do site em canvas 480×400; na placa do header fica pequeno — pedir versão empilhada |
-| Banner do hero  | `src/assets/heroBg.png` | provisório | montado: fundo navy + compressor R75 recortado do site (spinplus.com.br)                            |
+| Logo            | `src/assets/LOGO.png`   | confirmado | logo horizontal do site (493×164, transparente), no header claro                                    |
+| Foto do hero    | `src/assets/heroBg.png` | confirmado | sala de compressores RS 160 / RS 75 do site do cliente (1920×900), recorte 16:9 na moldura vermelha |
 | Logos de marcas | —                       | removido   | entrada 7: só o nome                                                                                |
 
 | Asset            | Arquivo                                | Status     | Observação                                                                    |
@@ -147,13 +147,25 @@ Aprovada pelo usuário em 15/10/2026 com a opção "inferir e publicar": Apoio e
 | Cenário          | `src/assets/diferenciais/cenario.jpg`  | provisório | sala de compressores do site do cliente                                       |
 | Pessoa recortada | `src/assets/diferenciais/pessoa.png`   | provisório | **sem foto da equipe**: compressor R45 recortado do site no lugar. Pedir foto |
 
+## Desvios do padrão
+
+Aprovados pelo usuário em 15/10/2026, a partir do modelo de layout que enviou para o topo da página.
+
+| Peça        | O que muda em relação ao padrão B2                                                                                                                                                                | Consequência                                                                                       |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Header      | fundo branco com filete vermelho, logo sem placa pendurada, selo "Mais de 20 anos de tradição / Suporte especializado" e logo Ingersoll Rand; **sem botão de cotação**                            | some o CTA `header-cta`; o CTA do hero fica logo abaixo                                            |
+| Hero        | claro, duas colunas (texto + foto emoldurada), H1 "Compressores de Ar de Parafuso Rotativo", botão verde, faixa vermelha "Temos o COMPRESSOR IDEAL para a sua aplicação!"; **sem coluna de chat** | o shortcode do chat não aparece no hero; atendimento pelo botão `btn-slave-whats` (`hero-primary`) |
+| Copy        | CTA e textos do material antigo do cliente ("Fale com nossa equipe…", "a melhor tecnologia…")                                                                                                     | o briefing recomendava não reaproveitá-los; prevalece o pedido do cliente                          |
+| Cores       | vermelho da marca (`brand-red` #e52620) e verde do botão (`cta-green`) no header e no hero                                                                                                        | o restante da página segue com o laranja do padrão                                                 |
+| Verificação | `scripts/check-lp.mjs` (A8 e especificação de LOGO/heroBg) passa a conferir as assinaturas desta versão                                                                                           | o CI continua bloqueando alteração acidental de Header e Hero                                      |
+
 ## Pendências para o cliente
 
 1. Foto de alguém da equipe, de corpo inteiro, para recorte (Diferenciais).
-2. Banner do hero produzido pelo brief 4.1.3 e logo em versão para a placa do header.
+2. Versão do logo Ingersoll Rand fornecida pelo cliente, se preferirem a oficial à do Wikimedia.
 3. Validar os 6 dados de dimensionamento e os textos dos 7 setores.
 4. Confirmar se A02/A05 e A09/A12 são equipamentos distintos (mesma foto) e enviar ficha por modelo (HP, kW, vazão, pressão), que abriria a tabela técnica para as buscas de 20/30/40/50 HP.
-5. Autorização de uso do logo Ingersoll Rand (hoje só o nome).
+5. Hero sem coluna de chat: confirmar se o plugin abre o chat pelo botão (`btn-slave-whats`) ou se querem o chat embutido em outro ponto.
 6. Número de WhatsApp, shortcodes do plugin e URL final da página.
 7. Base técnica dos percentuais "8% mais eficiência / 13% mais fluxo", se quiserem usá-los.
 

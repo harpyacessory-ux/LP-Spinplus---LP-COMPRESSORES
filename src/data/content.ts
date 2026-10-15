@@ -13,14 +13,12 @@ import type { Photo } from './types'
 import { site } from './site'
 
 import heroBg from '@assets/heroBg.png'
+import ingersollRand from '@assets/ingersoll-rand.png'
 
 /* ------------------------------------------------------------------ tipos */
 
-export interface HeroPoint {
-  icon: IconName
-  line1: string
-  line2: string
-}
+/** Trecho de texto com destaque: `strong` em negrito, `accent` em negrito vermelho. */
+export type RichText = readonly (string | { strong: string } | { accent: string })[]
 
 export interface TrustItem {
   icon: IconName
@@ -40,31 +38,57 @@ export const cta = {
 
 /* ------------------------------------------------------------------ header */
 
+/**
+ * Spinplus: header claro do layout aprovado pelo cliente em 15/10/2026 — logo, produto,
+ * selo de tradição e a marca Ingersoll Rand à direita (uso da logo decidido pelo cliente).
+ */
 export const header = {
   tagline: site.product,
-} as const
+  badge: 'Mais de 20 anos de tradição',
+  badgeSub: 'Suporte especializado',
+  partner: {
+    src: ingersollRand,
+    alt: 'Ingersoll Rand',
+  },
+} as const satisfies {
+  tagline: string
+  badge: string
+  badgeSub: string
+  partner: Photo
+}
 
 /* -------------------------------------------------------------------- hero */
 
+/** Hero claro do layout aprovado pelo cliente: texto à esquerda, foto emoldurada à direita. */
 export const hero = {
-  eyebrow: 'Compressores Ingersoll Rand',
-  title: `${site.product} para ${site.context}`,
-  text: 'Compressores de ar de parafuso rotativo lubrificados, com velocidade fixa ou VSD, para indústrias no estado do Rio de Janeiro.',
+  /** H1 completo: é nele que o `check:lp` procura a palavra-chave da campanha. */
+  title: 'Compressores de Ar de Parafuso Rotativo',
+  /** Trecho final do título, em vermelho na segunda linha (precisa existir dentro de `title`). */
+  highlight: 'Ar de Parafuso Rotativo',
+  text: [
+    'Com mais de 20 anos de tradição, oferecemos ',
+    { strong: 'a melhor tecnologia de compressores de ar lubrificados de parafuso' },
+    ' rotativo da Ingersoll Rand.',
+  ],
+  callout: [
+    'Ajudamos as indústrias oferecendo ar comprimido de excelência, eficiência, confiabilidade, ',
+    { accent: 'redução de custos de manutenção e de energia!' },
+  ],
+  cta: 'Fale com nossa equipe e solicite um orçamento',
+  /** Faixa vermelha que fecha o hero. */
+  band: ['Temos o ', { strong: 'COMPRESSOR IDEAL' }, ' para a sua aplicação!'],
   banner: {
     src: heroBg,
-    alt: 'Compressor de parafuso Ingersoll Rand da Série R',
+    alt: 'Sala de compressores Ingersoll Rand RS 160 e RS 75 com secador, filtros e reservatório de ar',
   },
-  points: [
-    { icon: 'clock', line1: 'Mais de 20 anos', line2: 'em ar comprimido' },
-    { icon: 'map-pin', line1: 'Ingersoll Rand', line2: 'no estado do RJ' },
-    { icon: 'badge-check', line1: 'Técnicos', line2: 'certificados' },
-  ],
 } as const satisfies {
-  eyebrow: string
   title: string
-  text: string
+  highlight: string
+  text: RichText
+  callout: RichText
+  cta: string
+  band: RichText
   banner: Photo
-  points: readonly [HeroPoint, HeroPoint, HeroPoint]
 }
 
 /* ----------------------------------------------------------------- cotação */
