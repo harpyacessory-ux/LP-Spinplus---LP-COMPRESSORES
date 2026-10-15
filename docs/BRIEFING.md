@@ -135,11 +135,12 @@ Aprovada pelo usuário em 15/10/2026 com a opção "inferir e publicar": Apoio e
 
 ## Assets
 
-| Asset           | Arquivo                 | Status     | Observação                                                                                          |
-| --------------- | ----------------------- | ---------- | --------------------------------------------------------------------------------------------------- |
-| Logo            | `src/assets/LOGO.png`   | confirmado | logo horizontal do site (493×164, transparente), no header claro                                    |
-| Foto do hero    | `src/assets/heroBg.png` | confirmado | sala de compressores RS 160 / RS 75 do site do cliente (1920×900), recorte 16:9 na moldura vermelha |
-| Logos de marcas | —                       | removido   | entrada 7: só o nome                                                                                |
+| Asset           | Arquivo                     | Status     | Observação                                                                                          |
+| --------------- | --------------------------- | ---------- | --------------------------------------------------------------------------------------------------- |
+| Logo            | `src/assets/LOGO.png`       | confirmado | logo horizontal do site (493×164, transparente), no header claro                                    |
+| Foto do hero    | `src/assets/heroBg.png`     | confirmado | sala de compressores RS 160 / RS 75 do site do cliente (1920×900), recorte 16:9 na moldura vermelha |
+| Fundo do hero   | `src/assets/hero-fundo.jpg` | confirmado | galpão claro com janelas enviado pelo usuário em 15/10/2026 (1870×841), sob véu branco à esquerda   |
+| Logos de marcas | —                           | removido   | entrada 7: só o nome                                                                                |
 
 | Asset            | Arquivo                                | Status     | Observação                                                                    |
 | ---------------- | -------------------------------------- | ---------- | ----------------------------------------------------------------------------- |

@@ -1,5 +1,6 @@
 ---
 import { getImage } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
 import logoImg from '../assets/LOGO.png'
 import '../styles/global.css'
 // Mesmo arquivo do @font-face de global.css: o Vite dá a ele uma única URL com hash.
@@ -21,10 +22,13 @@ interface Props {
 const { title = defaultTitle, description = defaultDescription } = Astro.props
 
 // Preload do LCP: mesmas larguras/formatos que o <Picture> do Hero.
-const heroPreload640 = await getImage({ src: hero.banner.src, width: 640, format: 'webp' })
-const heroPreload960 = await getImage({ src: hero.banner.src, width: 960, format: 'webp' })
-const heroPreload1280 = await getImage({ src: hero.banner.src, width: 1280, format: 'webp' })
-const heroPreload1920 = await getImage({ src: hero.banner.src, width: 1920, format: 'webp' })
+// Em AVIF, o primeiro formato do <Picture>: o navegador reaproveita o arquivo pré-carregado.
+const avifSrcset = async (src: ImageMetadata, widths: number[]) =>
+  (await Promise.all(widths.map((width) => getImage({ src, width, format: 'avif' }))))
+    .map((img, i) => `${img.src} ${widths[i]}w`)
+    .join(', ')
+const heroBannerSrcset = await avifSrcset(hero.banner.src, [640, 960, 1280, 1920])
+const heroBackgroundSrcset = await avifSrcset(hero.background.src, [640, 1024, 1536, 1870])
 const ogLogo = await getImage({ src: logoImg, width: 512, format: 'webp' })
 
 const ogImage = new URL(ogLogo.src, site.url).href
@@ -68,8 +72,16 @@ const jsonLd = {
     <link
       rel="preload"
       as="image"
-      href={heroPreload1280.src}
-      imagesrcset={`${heroPreload640.src} 640w, ${heroPreload960.src} 960w, ${heroPreload1280.src} 1280w, ${heroPreload1920.src} 1920w`}
+      type="image/avif"
+      imagesrcset={heroBackgroundSrcset}
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset={heroBannerSrcset}
       imagesizes="(min-width: 1320px) 600px, (min-width: 1024px) 46vw, 100vw"
       fetchpriority="high"
     />

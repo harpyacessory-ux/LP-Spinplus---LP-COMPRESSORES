@@ -13,6 +13,7 @@ import type { Photo } from './types'
 import { site } from './site'
 
 import heroBg from '@assets/heroBg.png'
+import heroFundo from '@assets/hero-fundo.jpg'
 import ingersollRand from '@assets/ingersoll-rand.png'
 
 /* ------------------------------------------------------------------ tipos */
@@ -81,6 +82,8 @@ export const hero = {
     src: heroBg,
     alt: 'Sala de compressores Ingersoll Rand RS 160 e RS 75 com secador, filtros e reservatório de ar',
   },
+  /** Fundo do hero: galpão claro com janelas (decorativo, alt vazio), enviado pelo cliente. */
+  background: { src: heroFundo, alt: '' },
 } as const satisfies {
   title: string
   highlight: string
@@ -89,6 +92,7 @@ export const hero = {
   cta: string
   band: RichText
   banner: Photo
+  background: Photo
 }
 
 /* ----------------------------------------------------------------- cotação */
