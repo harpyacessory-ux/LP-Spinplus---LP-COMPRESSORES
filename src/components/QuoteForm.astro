@@ -1,53 +1,134 @@
 ---
 /**
- * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.4). Grid 1.05fr · 1fr: formulário (shortcode) à esquerda, texto à direita.
- * Mobile: texto antes do formulário. O formulário é sempre o shortcode, nunca um <form> próprio.
+ * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.4), na versão Spinplus.
+ *
+ * Desvio do padrão aprovado pelo cliente em 15/10/2026 (docs/BRIEFING.md, "Desvios"):
+ * faixa escura com a foto da sala de compressores; título, texto e botão à esquerda;
+ * formulário num card branco com filete vermelho à direita. Mobile: texto antes do form.
+ *
+ * O formulário continua sendo o shortcode do plugin, nunca um <form> próprio. Onde o
+ * plugin não processa o shortcode (Vercel), o card mostra uma prévia visual, sem campos
+ * de verdade, com aviso — para ninguém preencher um formulário que não envia.
  */
-import Icon from './Icon.astro'
-import Eyebrow from './Eyebrow.astro'
-import { quote, cta } from '../data/content'
+import { Picture } from 'astro:assets'
+import CtaButton from './CtaButton.astro'
+import RichText from './RichText.astro'
+import { quote } from '../data/content'
 import { site } from '../data/site'
 
-const isDev = import.meta.env.DEV
+/** Campos da prévia, na ordem do formulário do cliente. */
+const previewFields = [
+  { label: 'Nome*' },
+  { label: 'Email*' },
+  { label: 'Telefone*', phone: true },
+  { label: 'Empresa*' },
+] as const
 ---
 
-<section id="cotacao" class="bg-neutral-gray-100 pt-8 pb-20">
+<section
+  id="cotacao"
+  class="quote-spin relative isolate overflow-hidden bg-primary-dark-900 py-16 lg:py-24"
+  data-quote="spinplus"
+>
+  {/* Fundo: sala de compressores sob véu escuro */}
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <Picture
+      src={quote.background.src}
+      alt={quote.background.alt}
+      widths={[640, 1024, 1536, 1920]}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      loading="lazy"
+      decoding="async"
+      class="h-full w-full scale-105 object-cover object-[30%_60%] blur-[2px]"
+      pictureAttributes={{ class: 'block h-full w-full' }}
+    />
+    <div class="quote-spin__veil absolute inset-0"></div>
+  </div>
+
   <div class="mx-auto max-w-page px-6 lg:px-10">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+    <div class="grid items-center gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.85fr)] lg:gap-14">
+      {/* Coluna de texto */}
+      <div>
+        <h2 class="font-display text-[2rem] leading-[1.12] font-normal tracking-[-0.01em] text-neutral-light sm:text-[2.5rem] lg:text-[2.35rem] xl:text-[2.6rem]">
+          <RichText parts={quote.title} strongClass="font-extrabold" />
+        </h2>
+
+        <p class="mt-5 max-w-2xl font-sans text-[17px] leading-relaxed text-neutral-light/85 xl:text-lg">
+          <RichText parts={quote.text} strongClass="font-bold text-neutral-light" />
+        </p>
+
+        <CtaButton cta="cotacao-primary" class="mt-8">
+          {quote.cta}
+        </CtaButton>
+      </div>
+
       {/* Coluna do formulário */}
-      <div class="order-2 w-full lg:order-1">
-        <slot name="shortcode">
-          {isDev ? (
-            <div
-              class="flex min-h-[520px] w-full flex-col gap-3 rounded-2xl border border-neutral-gray-200/70 bg-neutral-light p-6 shadow-[0_14px_32px_-26px_rgba(0,24,48,0.5)]"
-              aria-label="Mock do formulário (só em desenvolvimento)"
-            >
-              <span class="font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase">
-                Mock · formulário
-              </span>
-              <div class="grid gap-3 sm:grid-cols-2">
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-11 rounded border border-neutral-gray-200/70 bg-neutral-gray-100" />
-                <div class="h-28 rounded border border-neutral-gray-200/70 bg-neutral-gray-100 sm:col-span-2" />
+      <div>
+        <div
+          class="quote-card relative rounded-2xl border-t-[5px] border-brand-red bg-neutral-light p-6 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)] sm:p-8"
+          data-quote-card
+        >
+          <div data-quote-slot>
+            <slot name="shortcode" />
+          </div>
+
+          {/* Prévia visual: só aparece se o shortcode não foi processado pelo plugin */}
+          <div hidden aria-hidden="true" data-quote-preview>
+            <div class="grid gap-x-5 gap-y-4 sm:grid-cols-2">
+              {previewFields.map((field) => (
+                <div>
+                  <span class="quote-label">{field.label}</span>
+                  <span class="quote-field flex items-center">
+                    {'phone' in field && (
+                      <span class="flex h-full items-center gap-1.5 border-r border-[#d6dbe2] pr-3 pl-3">
+                        <svg viewBox="0 0 28 20" class="h-4 w-6 rounded-[2px]">
+                          <rect width="28" height="20" fill="#009c3b" />
+                          <path d="M14 2.5 25.5 10 14 17.5 2.5 10z" fill="#ffdf00" />
+                          <circle cx="14" cy="10" r="4.6" fill="#002776" />
+                        </svg>
+                        <svg
+                          viewBox="0 0 24 24"
+                          class="size-3.5 text-ink-soft"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path d="m6 9 6 6 6-6" />
+                        </svg>
+                      </span>
+                    )}
+                  </span>
+                </div>
+              ))}
+              <div class="sm:col-span-2">
+                <span class="quote-label">Sua Mensagem</span>
+                <span class="quote-field quote-field--area block"></span>
               </div>
-              <div class="mt-auto h-12 w-full rounded bg-accent-orange/80 sm:w-48" />
             </div>
-          ) : (
-            <div class="flex min-h-[520px] w-full flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-primary-dark/25 bg-neutral-light p-8 text-center shadow-[0_14px_32px_-26px_rgba(0,24,48,0.5)]">
-              <span class="font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase">
-                Espaço reservado
-              </span>
-              <p class="font-display text-lg font-bold text-ink">
-                Shortcode — formulário de cotação
-              </p>
-            </div>
-          )}
-        </slot>
+
+            <span class="mt-6 flex w-full items-center justify-center gap-3 rounded-[10px] bg-gradient-to-b from-brand-red to-brand-red-dark py-4 font-sans text-[17px] font-bold text-neutral-light shadow-[0_14px_26px_-14px_rgba(197,26,21,0.8)]">
+              Enviar Mensagem
+              <svg
+                viewBox="0 0 24 24"
+                class="size-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+
+            <p class="mt-4 text-center font-sans text-[11px] leading-relaxed text-ink-soft/80">
+              {quote.previewNote}
+            </p>
+          </div>
+        </div>
 
         {/* Nota de LGPD */}
-        <p class="mt-3 font-sans text-[11px] leading-relaxed text-ink-soft/80">
+        <p class="mt-4 font-sans text-[11px] leading-relaxed text-neutral-light/65">
           {quote.lgpd}
           {site.privacyUrl && (
             <>
@@ -56,7 +137,7 @@ const isDev = import.meta.env.DEV
                 href={site.privacyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="font-semibold text-primary-dark underline-offset-2 hover:underline"
+                class="font-semibold text-neutral-light/90 underline-offset-2 hover:underline"
               >
                 Política de privacidade
               </a>
@@ -65,41 +146,111 @@ const isDev = import.meta.env.DEV
           )}
         </p>
       </div>
-
-      {/* Coluna de texto */}
-      <div class="order-1 lg:order-2">
-        <Eyebrow>{quote.eyebrow}</Eyebrow>
-
-        <h2 class="mt-3 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
-          {quote.title}
-        </h2>
-
-        <span aria-hidden="true" class="mt-5 block h-[3px] w-16 bg-accent-orange"></span>
-
-        <p class="mt-5 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-base">
-          {quote.text}
-        </p>
-
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <button
-            type="button"
-            data-cta="cotacao-whatsapp"
-            class="btn-slave-whats inline-flex items-center justify-center gap-2.5 bg-primary-dark px-6 py-3.5 font-sans text-[15px] font-semibold text-neutral-light transition-colors duration-200 hover:bg-primary-dark-800"
-          >
-            <Icon name="whatsapp" class="size-4 shrink-0" />
-            {cta.whatsapp}
-          </button>
-        </div>
-
-        <ul class="mt-7 flex flex-wrap gap-x-6 gap-y-2.5">
-          {quote.trust.map((item) => (
-            <li class="flex items-center gap-2 font-sans text-[13px] font-medium text-ink">
-              <Icon name={item.icon} class="size-4 shrink-0 text-accent-orange" />
-              {item.label}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .quote-spin__veil {
+    background:
+      radial-gradient(900px 520px at 85% 50%, rgb(0 24 48 / 0.15) 0%, transparent 70%),
+      linear-gradient(
+        90deg,
+        rgb(8 18 32 / 0.86) 0%,
+        rgb(8 18 32 / 0.72) 50%,
+        rgb(8 18 32 / 0.64) 100%
+      );
+  }
+
+  /* Prévia: rótulos e campos no visual do formulário do cliente */
+  .quote-label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-primary-dark-900);
+  }
+
+  .quote-field {
+    height: 48px;
+    border: 1px solid #d6dbe2;
+    border-radius: 8px;
+    background: #f2f4f7;
+  }
+
+  .quote-field--area {
+    height: 88px;
+  }
+
+  /* Formulário do plugin (WordPress): mesmo visual, aplicado aos campos que ele renderizar */
+  .quote-card :global(label) {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-primary-dark-900);
+  }
+
+  .quote-card
+    :global(
+      :is(
+        input:not([type='checkbox'], [type='radio'], [type='hidden'], [type='submit']),
+        select,
+        textarea
+      )
+    ) {
+    width: 100%;
+    border: 1px solid #d6dbe2;
+    border-radius: 8px;
+    background: #f2f4f7;
+    padding: 12px 14px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--color-ink);
+  }
+
+  .quote-card :global(:is(input, select, textarea):focus) {
+    background: #ffffff;
+    outline: 2px solid var(--color-brand-red);
+    outline-offset: 1px;
+  }
+
+  .quote-card :global(:is(button[type='submit'], input[type='submit'])) {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    padding: 15px 20px;
+    background: linear-gradient(180deg, var(--color-brand-red), var(--color-brand-red-dark));
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: 0 14px 26px -14px rgb(197 26 21 / 0.8);
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  // O plugin do WordPress troca o shortcode pelo formulário. Onde ele não roda (Vercel),
+  // sobra o texto cru: aí o card mostra a prévia. O observer cobre o plugin que
+  // renderiza depois do carregamento.
+  document.querySelectorAll<HTMLElement>('[data-quote-card]').forEach((card) => {
+    const slot = card.querySelector<HTMLElement>('[data-quote-slot]')
+    const preview = card.querySelector<HTMLElement>('[data-quote-preview]')
+    if (!slot || !preview) return
+
+    const sync = () => {
+      const text = (slot.textContent ?? '').trim()
+      const unprocessed = !slot.querySelector('*') && (!text || text.startsWith('['))
+      slot.hidden = unprocessed
+      preview.hidden = !unprocessed
+    }
+
+    sync()
+    new MutationObserver(sync).observe(slot, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    })
+  })
+</script>

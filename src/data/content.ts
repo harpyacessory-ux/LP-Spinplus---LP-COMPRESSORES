@@ -8,7 +8,6 @@
  * Spinplus — compressores de parafuso Ingersoll Rand (grupos de anúncio "compressor parafuso"
  * e "Compressores Parafuso 20 a 50 HP"). Copy do briefing_spinplus_compressores_parafuso.md.
  */
-import type { IconName } from './icons'
 import type { Photo } from './types'
 import { site } from './site'
 
@@ -20,11 +19,6 @@ import ingersollRand from '@assets/ingersoll-rand.png'
 
 /** Trecho de texto com destaque: `strong` em negrito, `accent` em negrito vermelho. */
 export type RichText = readonly (string | { strong: string } | { accent: string })[]
-
-export interface TrustItem {
-  icon: IconName
-  label: string
-}
 
 /* ----------------------------------------------------------- vocabulário */
 
@@ -97,23 +91,36 @@ export const hero = {
 
 /* ----------------------------------------------------------------- cotação */
 
+/**
+ * Cotação no layout aprovado pelo cliente em 15/10/2026: faixa escura com a foto da sala
+ * de compressores, texto e botão à esquerda, formulário do plugin num card à direita.
+ */
 export const quote = {
-  eyebrow: 'Solicite sua cotação',
-  title: `Fale com quem entende de ${site.product.toLowerCase()}.`,
-  text: 'Informe pressão, vazão e regime da operação e a equipe da Spinplus indica o compressor Ingersoll Rand para a sua aplicação. Preencha o formulário ou fale direto conosco pelo WhatsApp.',
-  trust: [
-    { icon: 'clock', label: 'Mais de 20 anos de mercado' },
-    { icon: 'map-pin', label: 'Distribuidor Ingersoll Rand no RJ' },
-    { icon: 'badge-check', label: 'Técnicos certificados' },
+  /** H2: o trecho `strong` em extrabold, o resto em peso regular. */
+  title: [{ strong: 'Solicite um orçamento ou uma visita técnica' }, ' agora mesmo!'],
+  text: [
+    'Não deixe os problemas com ar comprimido atrapalharem sua produtividade! Escolha os compressores ',
+    { strong: 'Ingersoll Rand' },
+    ' com a ',
+    { strong: site.brandShort },
+    '.',
   ],
+  cta: 'Fale com nossa equipe e solicite um orçamento',
+  background: {
+    src: heroBg,
+    alt: '',
+  },
   /** Nota de LGPD exibida abaixo do formulário. */
   lgpd: `Seus dados são usados apenas para responder à sua solicitação de cotação, conforme a LGPD.`,
+  /** Aviso da prévia do formulário, visível só onde o plugin não processa o shortcode (Vercel). */
+  previewNote: 'Prévia do formulário: ele é carregado pelo plugin de atendimento no WordPress.',
 } as const satisfies {
-  eyebrow: string
-  title: string
-  text: string
-  trust: readonly [TrustItem, TrustItem, TrustItem]
+  title: RichText
+  text: RichText
+  cta: string
+  background: Photo
   lgpd: string
+  previewNote: string
 }
 
 /* ------------------------------------------------------------------ footer */

@@ -176,21 +176,22 @@ for (const f of astroFiles) {
 /* A8. Estrutura fixa: assinaturas do Header, Hero, Cotação e Footer ---------- */
 {
   const expect = {
-    // Spinplus: Header e Hero seguem o layout aprovado pelo cliente em 15/10/2026
+    // Spinplus: Header, Hero e Cotação seguem o layout aprovado pelo cliente em 15/10/2026
     // (docs/BRIEFING.md, "Desvios do padrão"). As assinaturas abaixo são as dessa versão.
     'Header.astro': ['sticky top-0 z-50', 'data-header="spinplus"', 'border-brand-red'],
     'Hero.astro': [
       'data-hero',
-      'data-cta="hero-primary"',
-      'btn-slave-whats',
+      'CtaButton cta="hero-primary"',
       'fetchpriority="high"',
       'hero-spin__band',
     ],
+    'CtaButton.astro': ['type="button"', 'btn-slave-whats', 'data-cta={cta}'],
     'QuoteForm.astro': [
       'id="cotacao"',
-      'lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]',
-      'order-2 w-full lg:order-1',
-      'data-cta="cotacao-whatsapp"',
+      'data-quote="spinplus"',
+      '<slot name="shortcode"',
+      'CtaButton cta="cotacao-primary"',
+      'quote.lgpd',
     ],
     'Footer.astro': [
       'navy-premium border-t border-white/15',
@@ -211,18 +212,8 @@ for (const f of astroFiles) {
     for (const n of needles) if (!s.includes(n)) fail(f, `estrutura fixa alterada: falta "${n}"`)
   }
 
-  // A seção de Cotação é a única que pode trazer o ritmo de fechamento embutido.
-  const quote = rawRead(join(SRC, 'components', 'QuoteForm.astro'))
-  if (!quote.includes(RHYTHMS[CONVERSION_RHYTHM].class))
-    fail(
-      join(SRC, 'components', 'QuoteForm.astro'),
-      `a Cotação deve usar o ritmo de fechamento "${RHYTHMS[CONVERSION_RHYTHM].class}"`,
-    )
-  if (!quote.includes(TONES[CONVERSION_TONE].class))
-    fail(
-      join(SRC, 'components', 'QuoteForm.astro'),
-      `a Cotação deve usar o fundo "${TONES[CONVERSION_TONE].class}"`,
-    )
+  // Padrão: a Cotação traz o ritmo de fechamento e o fundo cinza embutidos. Spinplus: a
+  // Cotação é a faixa escura do layout do cliente, conferida pela assinatura acima.
 }
 
 /* A9. rhythm.mjs e layout.ts não podem divergir ----------------------------- */

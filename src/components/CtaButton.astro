@@ -1,0 +1,66 @@
+---
+/**
+ * Botão verde de contato do layout Spinplus (hero e cotação): pílula com ícone de
+ * conversa e seta. Como todo CTA do padrão, é um `<button>` com `btn-slave-whats` —
+ * o plugin de atendimento do WordPress captura o clique — e leva `data-cta` único.
+ */
+import Icon from './Icon.astro'
+
+interface Props {
+  /** Vira `data-cta` (formato `secao-elemento`). */
+  cta: string
+  class?: string
+}
+
+const { cta, class: className = '' } = Astro.props
+---
+
+<button
+  type="button"
+  data-cta={cta}
+  class:list={[
+    'btn-slave-whats cta-green inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-b from-cta-green to-cta-green-dark px-6 py-4 font-sans text-[15px] font-bold text-neutral-light shadow-[0_16px_30px_-14px_rgba(19,160,42,0.85)] sm:w-auto sm:px-9 sm:text-[17px]',
+    className,
+  ]}
+>
+  <Icon name="chat" class="size-6 shrink-0" />
+  <span>
+    <slot />
+  </span>
+  <Icon name="chevron-right" class="cta-green__chevron size-5 shrink-0" />
+</button>
+
+<style>
+  .cta-green {
+    transition:
+      transform 200ms ease-out,
+      box-shadow 200ms ease-out,
+      filter 200ms ease-out;
+  }
+
+  .cta-green:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 22px 36px -16px rgb(19 160 42 / 0.9);
+  }
+
+  .cta-green__chevron {
+    transition: transform 200ms ease-out;
+  }
+
+  .cta-green:hover .cta-green__chevron {
+    transform: translateX(3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-green,
+    .cta-green__chevron {
+      transition: none;
+    }
+
+    .cta-green:hover,
+    .cta-green:hover .cta-green__chevron {
+      transform: none;
+    }
+  }
+</style>
