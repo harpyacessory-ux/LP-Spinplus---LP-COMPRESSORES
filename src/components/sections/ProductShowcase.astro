@@ -2,6 +2,11 @@
 /**
  * Vitrine de produtos — fase "oferta" da biblioteca B2.
  *
+ * Spinplus: visual do layout aprovado pelo cliente em 15/10/2026 (docs/BRIEFING.md,
+ * "Desvios") — foto em close no canto, título em duas linhas, marcador vermelho, linha no
+ * cabeçalho da prateleira e cards com palco de estúdio. `npm run compose` sobrescreve este
+ * arquivo com o da biblioteca: restaure esta versão depois de recompor.
+ *
  * Duas formas, resolvidas pelo conteúdo e não por entrada de briefing:
  *
  *   sem grupos  → uma grade de 2 colunas no mobile e 4 no desktop;
@@ -15,7 +20,6 @@
 import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
-import SectionHeader from '@components/SectionHeader.astro'
 import type { SectionProps } from '@lib/layout'
 import { showcase, type ShowcaseGroup, type ShowcaseItem } from '@data/sections/vitrine'
 
@@ -66,20 +70,42 @@ for (const shelf of shelves) {
 }
 ---
 
-<Section id="vitrine" tone={tone} rhythm={rhythm}>
-  <SectionHeader
-    eyebrow={showcase.eyebrow}
-    title={showcase.title}
-    text={showcase.text}
-    width="2xl"
-  />
+<Section id="vitrine" tone={tone} rhythm={rhythm} class="relative overflow-hidden">
+  {/* Foto em close no canto superior direito, esmaecendo para o branco (só desktop) */}
+  <div
+    aria-hidden="true"
+    class="showcase-feature pointer-events-none absolute top-0 right-0 hidden lg:block"
+  >
+    <Image
+      src={showcase.feature.src}
+      alt={showcase.feature.alt}
+      format="webp"
+      width={716}
+      loading="lazy"
+      decoding="async"
+      class="h-full w-full object-cover object-right"
+    />
+  </div>
 
-  <div class="mt-9 flex flex-col gap-10">
+  <div class="relative z-[1] max-w-2xl">
+    <span class="inline-flex items-center gap-2.5 font-sans text-[12px] font-semibold tracking-[0.16em] text-ink-soft uppercase">
+      <span class="h-[6px] w-[6px] bg-brand-red"></span>
+      {showcase.eyebrow}
+    </span>
+    <h2 class="mt-3 font-display text-3xl leading-[1.12] font-extrabold lg:whitespace-pre-line text-primary-dark-900 sm:text-4xl xl:text-[44px]">
+      {showcase.title}
+    </h2>
+    <p class="mt-4 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-base">
+      {showcase.text}
+    </p>
+  </div>
+
+  <div class="relative z-[1] mt-10 flex flex-col gap-10 lg:mt-12">
     {shelves.map((shelf) => (
       <div data-showcase-shelf>
         {shelf.group && (
-          <div class="flex items-center gap-4 border-b border-neutral-gray-200/70 pb-3">
-            <h3 class="flex min-w-0 items-center">
+          <div class="flex items-center gap-5">
+            <h3 class="flex min-w-0 shrink-0 items-center">
               {shelf.group.logo ? (
                 <Image
                   src={shelf.group.logo.src}
@@ -91,12 +117,13 @@ for (const shelf of shelves) {
                   class="h-8 w-auto max-w-[120px] object-contain"
                 />
               ) : (
-                <span class="font-display text-lg leading-snug font-extrabold text-ink">
+                <span class="font-display text-xl leading-snug font-extrabold text-primary-dark-900 sm:text-2xl">
                   {shelf.group.label}
                 </span>
               )}
             </h3>
-            <span class="ml-auto shrink-0 font-sans text-[12px] font-semibold tracking-[0.16em] text-ink-soft uppercase">
+            <span aria-hidden="true" class="h-px flex-1 bg-neutral-gray-200/60" />
+            <span class="shrink-0 font-sans text-[12px] font-semibold tracking-[0.18em] text-ink-soft uppercase">
               {shelf.items.length} itens
             </span>
           </div>
@@ -105,7 +132,7 @@ for (const shelf of shelves) {
         <ul
           data-showcase-rail
           class:list={[
-            'mt-5 gap-4 lg:gap-5',
+            'mt-6 gap-4 lg:gap-5',
             railed
               ? 'scroll-track -mx-6 flex snap-x snap-mandatory overflow-x-auto px-6 pb-3 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0'
               : 'grid grid-cols-2 lg:grid-cols-4',
@@ -116,28 +143,28 @@ for (const shelf of shelves) {
               <button
                 type="button"
                 data-cta={`vitrine-${item.id}`}
-                class="btn-slave-whats showcase-card group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light text-left shadow-[0_1px_2px_rgba(13,29,48,0.05)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent-orange/50 hover:shadow-[0_28px_56px_-28px_rgba(0,33,71,0.35)]"
+                class="btn-slave-whats showcase-card group relative flex h-full w-full flex-col overflow-hidden rounded-xl border border-neutral-gray-200/40 bg-neutral-light text-left shadow-[0_2px_8px_-2px_rgba(13,29,48,0.08)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-brand-red/40 hover:shadow-[0_28px_56px_-28px_rgba(0,33,71,0.35)]"
               >
                 <span
                   aria-hidden="true"
-                  class="absolute inset-x-0 top-0 z-10 h-[3px] origin-left scale-x-0 bg-accent-orange transition-transform duration-300 ease-out group-hover:scale-x-100"
+                  class="absolute inset-x-0 top-0 z-10 h-[3px] origin-left scale-x-0 bg-brand-red transition-transform duration-300 ease-out group-hover:scale-x-100"
                 />
 
-                <span class="showcase-card__stage relative flex h-40 items-center justify-center overflow-hidden">
+                <span class="showcase-card__stage relative flex h-48 items-center justify-center overflow-hidden sm:h-52">
                   <Image
                     src={item.photo.src}
                     alt={item.photo.alt}
                     format="webp"
-                    width={360}
+                    width={480}
                     loading="lazy"
                     decoding="async"
-                    class="relative z-[1] max-h-[7.75rem] w-auto max-w-[78%] object-contain mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-[1.07]"
+                    class="relative z-[1] max-h-[10.25rem] w-auto max-w-[84%] object-contain mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-[1.05] sm:max-h-[11rem]"
                   />
                 </span>
 
-                <span class="flex flex-1 items-start justify-between gap-3 px-5 pt-4 pb-4">
+                <span class="flex flex-1 items-center justify-between gap-3 border-t border-neutral-gray-200/30 px-5 py-4">
                   <span class="flex min-w-0 flex-col gap-1.5">
-                    <span class="font-display text-[15px] leading-snug font-extrabold text-ink">
+                    <span class="font-display text-[15px] leading-snug font-bold text-primary-dark-900 sm:text-base">
                       {item.title}
                     </span>
                     {showText && (
@@ -146,8 +173,8 @@ for (const shelf of shelves) {
                       </span>
                     )}
                   </span>
-                  <span class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-neutral-gray-100 text-primary-dark transition-[background-color,color,transform] duration-300 group-hover:translate-x-0.5 group-hover:bg-accent-orange group-hover:text-neutral-light">
-                    <Icon name="arrow-right" class="size-3.5" />
+                  <span class="flex size-9 shrink-0 items-center justify-center rounded-full border border-neutral-gray-200/70 bg-neutral-light text-primary-dark-900 transition-[background-color,border-color,color,transform] duration-300 group-hover:translate-x-0.5 group-hover:border-brand-red group-hover:bg-brand-red group-hover:text-neutral-light">
+                    <Icon name="arrow-right" class="size-4" />
                   </span>
                 </span>
               </button>
@@ -161,7 +188,7 @@ for (const shelf of shelves) {
               type="button"
               data-rail-prev
               aria-label={`Produto anterior de ${shelf.group?.label}`}
-              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
+              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-brand-red hover:text-brand-red"
             >
               <Icon name="chevron-right" class="size-4 rotate-180" />
             </button>
@@ -169,7 +196,7 @@ for (const shelf of shelves) {
               type="button"
               data-rail-next
               aria-label={`Próximo produto de ${shelf.group?.label}`}
-              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
+              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-brand-red hover:text-brand-red"
             >
               <Icon name="chevron-right" class="size-4" />
             </button>
@@ -181,22 +208,37 @@ for (const shelf of shelves) {
 </Section>
 
 <style>
-  /* Mesmo palco claro dos cards de produto: gradiente suave + malha de pontos
-     que esmaece nas bordas. O `mix-blend-multiply` da foto come o fundo branco
-     das imagens de catálogo, então recorte e fundo branco convivem no grid. */
-  .showcase-card__stage {
-    background-image: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);
+  /* Foto de destaque: ancorada no canto da seção, some para a esquerda e para baixo */
+  .showcase-feature {
+    width: min(52vw, 820px);
+    height: 360px;
+    mask-image:
+      linear-gradient(to right, transparent 0%, black 32%),
+      linear-gradient(to bottom, black 62%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, black 32%),
+      linear-gradient(to bottom, black 62%, transparent 100%);
+    -webkit-mask-composite: source-in;
   }
 
-  .showcase-card__stage::before {
+  /* Palco de estúdio: cinza-claro que clareia até o "chão", com sombra sob o produto.
+     O `mix-blend-multiply` da foto come o fundo branco das imagens de catálogo. */
+  .showcase-card__stage {
+    background:
+      radial-gradient(70% 45% at 50% 88%, #ffffff 0%, rgb(255 255 255 / 0) 100%),
+      linear-gradient(180deg, #e9ecf0 0%, #f3f5f7 58%, #fbfbfc 72%, #ffffff 100%);
+  }
+
+  .showcase-card__stage::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(0, 33, 71, 0.16) 1px, transparent 1.2px);
-    background-size: 18px 18px;
-    mask-image: radial-gradient(ellipse at center, transparent 32%, black 90%);
-    -webkit-mask-image: radial-gradient(ellipse at center, transparent 32%, black 90%);
-    opacity: 0.7;
+    bottom: 13%;
+    left: 50%;
+    width: 58%;
+    height: 16px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgb(0 24 48 / 0.16) 0%, transparent 70%);
     pointer-events: none;
   }
 

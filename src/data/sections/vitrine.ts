@@ -26,6 +26,7 @@ import produto09 from '@assets/vitrine/produto-09.jpg'
 import produto10 from '@assets/vitrine/produto-10.jpg'
 import produto11 from '@assets/vitrine/produto-11.jpg'
 import produto12 from '@assets/vitrine/produto-12.jpg'
+import destaque from '@assets/vitrine/destaque-ingersoll.jpg'
 
 /** Marca, linha ou família. `logo` é opcional: sem ela, vale o nome. */
 export interface ShowcaseGroup {
@@ -48,8 +49,11 @@ const alt = (model: string) => `Compressor de parafuso Ingersoll Rand ${model}`
 
 export const showcase = {
   eyebrow: 'Portfólio Ingersoll Rand',
-  title: 'Compressores de parafuso para cada demanda',
+  /** O `\n` marca a quebra de linha do título no layout aprovado pelo cliente. */
+  title: 'Compressores de parafuso\npara cada demanda',
   text: 'Série R e Next Generation R Series, com velocidade fixa ou VSD e versões com tratamento de ar integrado. Consulte o modelo para a sua aplicação.',
+  /** Foto decorativa no canto superior direito (desktop), do layout aprovado pelo cliente. */
+  feature: { src: destaque, alt: '' },
   groups: [{ id: 'ingersoll-rand', label: 'Ingersoll Rand', logo: null }],
   items: [
     {
@@ -144,6 +148,7 @@ export const showcase = {
   eyebrow: string
   title: string
   text: string
+  feature: Photo
   groups: readonly ShowcaseGroup[]
   items: readonly ShowcaseItem[]
 }
